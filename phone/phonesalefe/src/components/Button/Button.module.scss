@@ -1,0 +1,18 @@
+.wrapper {
+    padding: 12px 20px;
+
+    font-weight: 600;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 16rem;
+    .title {
+        font-size: 1.8rem;
+    }
+    &:hover {
+        opacity: 0.8;
+    }
+}
+.primary {
+    background-color: var(--primary);
+}

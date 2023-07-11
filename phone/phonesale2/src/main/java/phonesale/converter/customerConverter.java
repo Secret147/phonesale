@@ -11,6 +11,7 @@ public class customerConverter {
 		customerEntity entity = new customerEntity();
 		entity.setId(dto.getId());
 		entity.setAddress(dto.getAddress());
+		entity.setPassword(dto.getPassword());
 		entity.setBirth(dto.getBirth());
 		entity.setName(dto.getName());
 		entity.setNumber(dto.getNumber());
@@ -21,6 +22,7 @@ public class customerConverter {
 		customerDTO dto = new customerDTO();
 		dto.setId(entity.getId());
 		dto.setAddress(entity.getAddress());
+		dto.setPassword(entity.getPassword());
 		dto.setBirth(entity.getBirth());
 		dto.setName(entity.getName());
 		dto.setNumber(entity.getNumber());

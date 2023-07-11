@@ -19,6 +19,8 @@ public class customerEntity {
 	
 	private String name;
 	
+	private String password;
+	
 	private String number;
 	
 	private String address;
