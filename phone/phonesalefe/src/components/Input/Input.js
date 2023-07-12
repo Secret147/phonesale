@@ -4,6 +4,7 @@ import styles from './Input.module.scss';
 const cx = classNames.bind(styles);
 function Input({ type, name, value, className, title, small, onChange, large, placeholder, ...passProps }) {
     const props = {
+        onChange,
         ...passProps,
     };
     const classes = cx('wrapper', {
@@ -18,8 +19,8 @@ function Input({ type, name, value, className, title, small, onChange, large, pl
                 type={type}
                 placeholder={placeholder}
                 className={cx('input')}
-                onChange={onChange}
                 name={name}
+                onChange={onChange}
                 value={value}
                 required
             />

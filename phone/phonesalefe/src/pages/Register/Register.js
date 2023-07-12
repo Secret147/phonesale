@@ -6,7 +6,9 @@ import Button from '~/components/Button';
 import { useState } from 'react';
 
 const cx = classNames.bind(styles);
+
 function Register() {
+    const customerAPI = 'http://localhost:8080/customer/new';
     const [user, setUser] = useState({
         name: '',
         password: '',
@@ -20,27 +22,22 @@ function Register() {
         const { name, value } = event.target;
         setUser({ ...user, [name]: value });
     };
-
-    const handleSubmit = (event) => {
-        fetch('http://localhost:8080/new', {
+    const handleSubmit = async (event) => {
+        const fetchOptions = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(user),
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.ok) {
-                    // Xóa thành công, cập nhật lại danh sách người dùng
-
-                    alert('OK');
-                }
-            })
-            .catch((error) => {
-                console.error('Lỗi khi thêm người dùng:', error);
-            });
+        };
+        const response = await fetch(customerAPI, fetchOptions);
+        if (!response.ok) {
+            alert('fail');
+        } else {
+            window.location.href = '/';
+        }
     };
+
     return (
         <Form title="Register" onSubmit={handleSubmit}>
             <Input type="text" placeholder="Username" onChange={handleInputChange} name="name" value={user.name} />
@@ -64,7 +61,7 @@ function Register() {
                 <Button primary type="submit">
                     Register
                 </Button>
-                <br></br>
+                <br />
                 <div className={cx('question')}>
                     <span>Bạn đã có tài khoản?</span>
                     <a href="/login">Đăng nhập</a>
@@ -73,4 +70,5 @@ function Register() {
         </Form>
     );
 }
+
 export default Register;
