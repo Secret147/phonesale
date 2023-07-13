@@ -32,7 +32,7 @@ function Register() {
         };
         const response = await fetch(customerAPI, fetchOptions);
         if (!response.ok) {
-            alert('fail');
+            alert(response);
         } else {
             window.location.href = '/';
         }
@@ -40,7 +40,7 @@ function Register() {
 
     return (
         <Form title="Register" onSubmit={handleSubmit}>
-            <Input type="text" placeholder="Username" onChange={handleInputChange} name="name" value={user.name} />
+            <Input type="email" placeholder="Username" onChange={handleInputChange} name="name" value={user.name} />
             <Input
                 type="password"
                 placeholder="Password"

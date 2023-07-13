@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import phonesale.entity.customerEntity;
@@ -26,6 +27,20 @@ public class customerAPI {
 		}
 		customerRe.save(customer);
 		return ResponseEntity.ok(customer);
+	}
+	@PostMapping("/customer")
+	public ResponseEntity<?> login(@RequestBody customerEntity model){
+		customerEntity customer = new customerEntity();
+		customer = customerRe.findByName(model.getName());
+		if(customer.getName().equals(model.getName())  && customer.getPassword().equals(model.getPassword())) {
+			return ResponseEntity.ok(model);
+		}
+		else if(!customer.getPassword().equals(model.getPassword())){
+			return ResponseEntity.badRequest().body("Sai thông tin mật khẩu");
+		}
+		else{
+			return ResponseEntity.badRequest().body("Tài khoản không tồn tại");
+		}
 		
 	}
 	@GetMapping("/customer/new")
