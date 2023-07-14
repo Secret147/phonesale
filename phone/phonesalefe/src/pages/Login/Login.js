@@ -27,10 +27,10 @@ function Login() {
             body: JSON.stringify(customer),
         };
         const response = await fetch(loginAPI, fetchOptions);
-        if (response.ok) {
-            window.location.href = '/';
-        } else {
+        if (!response.ok) {
             alert('Tài khoản hoặc mật khẩu không đúng');
+        } else {
+            window.location.href = '/';
         }
     };
     return (

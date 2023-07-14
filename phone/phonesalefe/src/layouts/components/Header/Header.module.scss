@@ -2,4 +2,121 @@
     color: var(--primary);
     height: 6.4rem;
     border-bottom: 2px solid gray;
+    display: flex;
+
+    align-items: center;
+}
+.logo {
+    width: 30%;
+    display: flex;
+    align-items: center;
+    margin-left: 12px;
+    .icon_home {
+        display: flex;
+    }
+    img {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+    }
+}
+.search {
+    display: flex;
+    align-items: center;
+    width: 30%;
+
+    .search_main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 90%;
+    }
+}
+.icon_header {
+    color: black;
+}
+.icon {
+    display: flex;
+    width: 10%;
+}
+.cart {
+    font-size: 2.2rem;
+    color: black;
+    position: relative;
+    margin-right: 24px;
+
+    .number {
+        position: absolute;
+        top: -5px;
+        right: -11px;
+        border-radius: 50%;
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.4rem;
+        font-weight: 600;
+        background-color: var(--primary);
+        text-align: center;
+        color: white;
+    }
+}
+.truck {
+    color: black;
+    font-size: 2.2rem;
+}
+.cart:hover,
+.truck:hover {
+    opacity: 0.6;
+}
+.input_header {
+    width: 80%;
+    input {
+        padding: 8px;
+        padding-left: 16px;
+        border: 2px solid gray;
+        outline: none;
+        border-right: none;
+        font-size: 1.8rem;
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        width: 100%;
+    }
+}
+
+.search_btn {
+    color: gray;
+    font-size: 2rem;
+    height: 4rem;
+    border: 2px solid gray;
+    border-top-right-radius: 20px;
+    border-left: 0.5px solid gray;
+    border-bottom-right-radius: 20px;
+    line-height: 3.9rem;
+    width: 15%;
+
+    background-color: #f8f8f8;
+    text-align: center;
+}
+.search_btn:hover {
+    background-color: #c6c6c6;
+}
+.user {
+    color: black;
+    font-size: 1.8rem;
+    width: 25%;
+    .user_main {
+        float: right;
+        display: flex;
+    }
+    label {
+        margin-left: 8px;
+    }
+}
+.btn_header {
+    width: 25%;
+    .btn_main {
+        float: right;
+        min-width: 16rem;
+        overflow: auto;
+        display: flex;
+    }
 }

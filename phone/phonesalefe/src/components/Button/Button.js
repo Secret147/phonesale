@@ -2,7 +2,20 @@ import classNames from 'classnames/bind';
 import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
-function Button({ to, type, href, primary = false, className, leftIcon, rightIcon, text, children, ...passProps }) {
+function Button({
+    to,
+    type,
+    href,
+    primary = false,
+    normal = false,
+    small = false,
+    className,
+    leftIcon,
+    rightIcon,
+    text,
+    children,
+    ...passProps
+}) {
     let Comp = 'button';
     const props = {
         ...passProps,
@@ -18,6 +31,8 @@ function Button({ to, type, href, primary = false, className, leftIcon, rightIco
         [className]: className,
         text,
         primary,
+        normal,
+        small,
     });
     return (
         <Comp className={classes} {...props} type={type}>
