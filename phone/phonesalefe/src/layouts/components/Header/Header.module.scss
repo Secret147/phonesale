@@ -2,15 +2,19 @@
     color: var(--primary);
     height: 6.4rem;
     border-bottom: 2px solid gray;
+    justify-content: center;
     display: flex;
-
+}
+.main {
+    display: flex;
     align-items: center;
+    width: 80%;
 }
 .logo {
     width: 30%;
     display: flex;
     align-items: center;
-    margin-left: 12px;
+
     .icon_home {
         display: flex;
     }
@@ -57,6 +61,7 @@
         background-color: var(--primary);
         text-align: center;
         color: white;
+        user-select: none;
     }
 }
 .truck {
@@ -92,7 +97,6 @@
     border-bottom-right-radius: 20px;
     line-height: 3.9rem;
     width: 15%;
-
     background-color: #f8f8f8;
     text-align: center;
 }
@@ -102,7 +106,7 @@
 .user {
     color: black;
     font-size: 1.8rem;
-    width: 25%;
+    width: 30%;
     .user_main {
         float: right;
         display: flex;
@@ -112,11 +116,43 @@
     }
 }
 .btn_header {
-    width: 25%;
+    width: 30%;
     .btn_main {
         float: right;
         min-width: 16rem;
         overflow: auto;
         display: flex;
+    }
+}
+@media (max-width: 1120px) {
+    .btn_header,
+    .user {
+        width: 45%;
+    }
+    .logo {
+        width: 15%;
+    }
+}
+@media (max-width: 700px) {
+    .btn_header,
+    .user {
+        display: none;
+    }
+    .logo {
+        width: 20%;
+    }
+    .search {
+        width: 50%;
+    }
+    .search_btn {
+        font-size: 1.6rem;
+    }
+}
+@media (max-width: 360px) {
+    .search {
+        display: none;
+    }
+    .logo {
+        width: 50%;
     }
 }

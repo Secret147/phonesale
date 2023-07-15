@@ -1,11 +1,15 @@
 @import 'normalize.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,100&family=Roboto:wght@100;300;400;500;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css');
 
 :root {
     --primary: rgb(247, 83, 110);
     --layout-width: 1150px;
     --layout-height: 60px;
+    --border-task: 8px;
+    --primarytwo: rgb(53, 196, 196);
 }
 html {
     font-size: 62.5%;
