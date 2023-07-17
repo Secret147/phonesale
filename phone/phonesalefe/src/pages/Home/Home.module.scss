@@ -1,13 +1,37 @@
 .wrapper {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
+    .task_main {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 16px;
+    }
 }
 .task {
     background-color: var(--primary);
     display: flex;
     margin-top: 32px;
     border-radius: var(--border-task);
-    width: 80%;
+    width: var(--width-basic);
+    flex-wrap: wrap;
+}
+.slider {
+    width: var(--width-basic);
+    margin: auto;
+    border-radius: var(--border-task);
+}
+.test {
+    background-color: black;
+    height: 200px;
+}
+.item {
+    margin-top: 64px;
+    display: flex;
+    justify-content: center;
+    .item_main {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: var(--width-basic);
+    }
 }

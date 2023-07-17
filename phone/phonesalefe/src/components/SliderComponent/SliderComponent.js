@@ -1,20 +1,27 @@
 import Slider from 'react-slick';
-import './SliderComponent.module.css';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import './SliderComponent.module.scss';
+import './Slider.css';
 
 function SliderComponent({ arrImg }) {
-    const settings = {
+    let settings = {
         dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        // autoplay: true,
+        // autoSpeed: 3000,
     };
+
     return (
         <Slider {...settings}>
-            {arrImg.map((image, index) => {
-                return <img key={index} src={image} alt="slider" preview="false" width="100%" height="100px" />;
-            })}
+            {arrImg.map((image, index) => (
+                <img src={image} key={index} alt="slider" />
+            ))}
         </Slider>
     );
 }
+
 export default SliderComponent;

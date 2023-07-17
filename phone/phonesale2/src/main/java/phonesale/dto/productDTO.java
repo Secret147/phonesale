@@ -16,5 +16,7 @@ public class productDTO {
 	private String img;
 	
 	private Long price;
+	
+	private String type;
 
 }
