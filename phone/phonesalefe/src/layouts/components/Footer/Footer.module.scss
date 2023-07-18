@@ -2,12 +2,14 @@
     width: 100%;
 
     display: flex;
+    color: white;
 }
 .footer_main {
-    min-width: var(--width-basic);
+    width: var(--width-basic);
     margin: 0 auto;
-    background-color: var(--primarytwo);
+    background: transparent linear-gradient(180deg, #033cef 0%, #08a6d2 100%) 0% 0% no-repeat padding-box;
     border-radius: 8px;
+    color: white;
 }
 .footer_front {
     display: flex;
@@ -27,7 +29,7 @@
 }
 .footer_support li a {
     text-decoration: none;
-    color: rgb(1, 8, 12);
+    color: white;
     font-size: 14px;
 }
 .thanhtoan ul {
@@ -47,7 +49,6 @@
 }
 .sdt {
     padding: 12px;
-    background-color: white;
     border-radius: 8px;
     font-weight: bold;
     display: block;

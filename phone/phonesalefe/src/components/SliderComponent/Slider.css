@@ -28,3 +28,11 @@
         font-size: 24px !important;
     }
 }
+.slick-current {
+    display: flex;
+    justify-content: center;
+}
+.custom {
+    display: flex !important;
+    justify-content: center;
+}

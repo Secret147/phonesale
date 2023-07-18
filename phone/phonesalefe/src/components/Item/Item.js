@@ -1,6 +1,5 @@
 import styles from './Item.module.scss';
 import classNames from 'classnames/bind';
-import '~/img/thumb-xiaomi-13.webp';
 
 const cx = classNames.bind(styles);
 
