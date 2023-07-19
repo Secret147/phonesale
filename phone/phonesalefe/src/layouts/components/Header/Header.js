@@ -12,12 +12,12 @@ function Header() {
         <div className={cx('wrapper')}>
             <div className={cx('main')}>
                 <div className={cx('logo')}>
-                    <Link to={'/'} className={cx('icon_home')}>
+                    <a href="/" className={cx('icon_home')}>
                         <img
                             src="https://cdn.nhanlucnganhluat.vn/uploads/images/6841A1DC/logo/2019-03/real-me-logo.png"
                             alt="no img"
                         ></img>
-                    </Link>
+                    </a>
                 </div>
                 <div className={cx('search')}>
                     <div className={cx('search_main')}>

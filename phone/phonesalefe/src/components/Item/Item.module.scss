@@ -4,6 +4,7 @@
     box-shadow: 0 4px 6px #faf5f529;
     border-radius: var(--border-task);
     margin: 0 2px 32px 0;
+    user-select: none;
 }
 .main {
     padding: 2rem 2rem;
@@ -17,6 +18,9 @@
     height: 100%;
 }
 .name {
+    &:hover {
+        color: var(--primary);
+    }
 }
 .name,
 label,

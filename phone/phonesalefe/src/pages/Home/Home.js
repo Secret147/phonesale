@@ -11,9 +11,13 @@ import SliderComponent from '~/components/SliderComponent/SliderComponent';
 import Item from '~/components/Item/Item';
 import { useEffect, useState } from 'react';
 import Taskbar from '~/components/Taskbar/Taskbar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
-
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
 function Home() {
     const productsAPI = 'http://localhost:8080/product/new';
     const [products, setProducts] = useState([]);
@@ -25,6 +29,13 @@ function Home() {
             });
     }, []);
 
+    const next = (id) => {
+        window.location.href = `/detail`;
+        localStorage.setItem('productId', id);
+    };
+    const handleClick = () => {
+        window.scrollTo(0, 0);
+    };
     return (
         <div className={cx('wrapper')}>
             <Taskbar setProducts={setProducts}></Taskbar>
@@ -34,19 +45,22 @@ function Home() {
             <div className={cx('item')}>
                 <div className={cx('item_main')}>
                     {products.map((product) => {
-                        const priceString = product.price;
-                        const formattedNumber = priceString.toLocaleString();
                         return (
                             <Item
                                 key={product.id}
                                 name={product.name}
                                 img={product.img}
                                 memory={product.memory}
-                                price={formattedNumber}
+                                price={formatNumber(product.price)}
+                                onClick={() => next(product.id)}
                             ></Item>
                         );
                     })}
                 </div>
+            </div>
+
+            <div className={cx('back')} onClick={handleClick}>
+                <FontAwesomeIcon icon={faArrowUp} />
             </div>
         </div>
     );

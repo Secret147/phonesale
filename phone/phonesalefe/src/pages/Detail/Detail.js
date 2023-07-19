@@ -5,9 +5,23 @@ import classNames from 'classnames/bind';
 import SliderComponent from '~/components/SliderComponent/SliderComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faCheck, faTruckFast, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
 function Detail() {
+    const id = localStorage.getItem('productId');
+    const [product, setProduct] = useState([]);
+    useEffect(() => {
+        fetch(`http://localhost:8080/productid/${id}`)
+            .then((res) => res.json())
+            .then((res) => {
+                setProduct(res);
+            });
+    });
+    const price = product.price ? formatNumber(product.price) : '';
     return (
         <div className={cx('wrapper')}>
             <div className={cx('taskbar')}>
@@ -16,8 +30,8 @@ function Detail() {
             <div className={cx('info_product')}>
                 <div className={cx('header')}>
                     <p>Điện thoại di động</p>
-                    <p>Redmi Note 12S (8GB/256GB)- </p>
-                    <p> Chính hãng</p>
+                    <p>{product.name} - </p>
+                    <p>{product.memory}</p>
                 </div>
                 <div className={cx('container')}>
                     <div className={cx('slider')}>
@@ -35,7 +49,7 @@ function Detail() {
                     <div className={cx('infor')}>
                         <div className={cx('infor_main')}>
                             <div className={cx('price')}>
-                                <p className={cx('pricef')}>6190000 đ</p>
+                                <p className={cx('pricef')}>{price} đ</p>
                                 <p className={cx('prices')}>Giá đã bao gồm VAT</p>
                             </div>
                             <p className={cx('infors')}>Sản phẩm bán giá Hotsale với số lượng có hạn</p>
@@ -149,11 +163,7 @@ function Detail() {
                         <p>Mô tả</p>
                     </div>
                     <div className={cx('description_container')}>
-                        <p>
-                            Redmi Note 12S - Chính hãng tuy chỉ mới được ra mắt trong thời gian gần đây nhưng đã thu hút
-                            được rất nhiều sự chú ý. Điện thoại sở hữu đầy đủ tính năng hiện đại và mạnh mẽ, Xiaomi
-                            Redmi Note 12S sẽ trở thành một trợ thủ đắc lực cho bạn trong quá trình học tập và làm việc.
-                        </p>
+                        <p>{product.description}</p>
                     </div>
                 </div>
             </div>

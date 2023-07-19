@@ -13,8 +13,8 @@ function SliderComponent({ arrImg, check = false }) {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        // autoplay: true,
-        // autoSpeed: 3000,
+        autoplay: true,
+        autoSpeed: 1000,
     };
     let width = '100%';
     let height = '100%';

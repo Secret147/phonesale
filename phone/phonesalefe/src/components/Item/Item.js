@@ -3,9 +3,9 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-function Item({ img, memory, name, price }) {
+function Item({ img, memory, name, price, onClick }) {
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper')} onClick={onClick}>
             <div className={cx('main')}>
                 <div className={cx('img')}>
                     <img src={img} alt="anh"></img>

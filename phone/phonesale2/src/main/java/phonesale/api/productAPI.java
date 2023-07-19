@@ -38,6 +38,11 @@ public class productAPI {
 		List<productEntity> products = productRe.findByName(name);
 		return ResponseEntity.ok(products);
 	}
+	@GetMapping("/productid/{id}")
+	public ResponseEntity<?> gProductid(@PathVariable("id")Long id){
+		productEntity product = productRe.findById(id).get();
+		return ResponseEntity.ok(product);
+	}
 	
 
 
