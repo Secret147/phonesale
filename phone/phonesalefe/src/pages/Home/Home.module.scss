@@ -38,3 +38,13 @@
         opacity: 1;
     }
 }
+.page {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 32px 0;
+    .page_main {
+    }
+    button {
+        padding: 4px 8px;
+    }
+}

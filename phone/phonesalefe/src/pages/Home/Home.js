@@ -19,16 +19,26 @@ function formatNumber(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 function Home() {
-    const productsAPI = 'http://localhost:8080/product/new';
+    // const productsAPI = 'http://localhost:8080/product/new';
     const [products, setProducts] = useState([]);
-    useEffect(() => {
-        fetch(productsAPI)
+    // const [productpage, setProductpage] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+    // useEffect(() => {
+    //     fetch(productsAPI)
+    //         .then((res) => res.json())
+    //         .then((res) => {
+    //             setProducts(res);
+    //         });
+    // }, []);
+    const fetchData = (page, limit) => {
+        fetch(`http://localhost:8080/product/pages?page=${page}&limit=${limit}`)
             .then((res) => res.json())
             .then((res) => {
-                setProducts(res);
+                setProducts(res.products);
+                setTotalPages(res.totalPage);
             });
-    }, []);
-
+    };
     const next = (id) => {
         window.location.href = `/detail`;
         localStorage.setItem('productId', id);
@@ -36,9 +46,23 @@ function Home() {
     const handleClick = () => {
         window.scrollTo(0, 0);
     };
+    useEffect(() => {
+        fetchData(currentPage, 16);
+    }, [currentPage]);
+
+    const handlePageChange = (selectedPage) => {
+        setCurrentPage(selectedPage);
+    };
+    let checktask = true;
     return (
         <div className={cx('wrapper')}>
-            <Taskbar setProducts={setProducts}></Taskbar>
+            <Taskbar
+                setProducts={setProducts}
+                onChange={() => {
+                    checktask = false;
+                    alert(checktask);
+                }}
+            ></Taskbar>
             <div className={cx('slider')}>
                 <SliderComponent arrImg={[img1, img2, img3, img5, img6, img7, img8]} />
             </div>
@@ -59,8 +83,21 @@ function Home() {
                 </div>
             </div>
 
-            <div className={cx('back')} onClick={handleClick}>
+            <div className={cx('back')} onClick={() => handleClick()}>
                 <FontAwesomeIcon icon={faArrowUp} />
+            </div>
+            <div className={cx('page')}>
+                <div className={cx('page_main')}>
+                    {checktask ? (
+                        Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                            <button key={page} onClick={() => handlePageChange(page)}>
+                                {page}
+                            </button>
+                        ))
+                    ) : (
+                        <div></div>
+                    )}
+                </div>
             </div>
         </div>
     );
