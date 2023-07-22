@@ -4,10 +4,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faCartShopping, faTruck, faUser } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button/Button';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 
 const cx = classNames.bind(styles);
 function Header() {
-    const isUser = true;
+    const [checkuser, setCheckuser] = useState(false);
+
+    useEffect(() => {
+        if (!Cookies.get('user')) {
+            setCheckuser(true);
+        }
+    }, []);
+    const logout = async () => {
+        const fetchOptions = {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify('logout'),
+        };
+        const response = await fetch('http://localhost:8080/customer/logout', fetchOptions);
+        if (response.ok) {
+            Cookies.remove('user');
+            setCheckuser(false);
+            window.location.reload();
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('main')}>
@@ -44,7 +67,7 @@ function Header() {
                         </Link>
                     </div>
                 </div>
-                {isUser ? (
+                {checkuser ? (
                     <div className={cx('btn_header')}>
                         <div className={cx('btn_main')}>
                             <Button normal small href="/login">
@@ -58,11 +81,11 @@ function Header() {
                 ) : (
                     <div className={cx('user')}>
                         <div className={cx('user_main')}>
-                            <div>
+                            <div onClick={() => logout()}>
                                 <FontAwesomeIcon icon={faUser} />
                             </div>
                             <div>
-                                <label>thanhchung2002@gmail.com</label>
+                                <label>{Cookies.get('user')}</label>
                             </div>
                         </div>
                     </div>

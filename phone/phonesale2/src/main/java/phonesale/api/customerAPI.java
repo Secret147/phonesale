@@ -2,6 +2,8 @@ package phonesale.api;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,11 +31,12 @@ public class customerAPI {
 		return ResponseEntity.ok(customer);
 	}
 	@PostMapping("/customer")
-	public ResponseEntity<?> login(@RequestBody customerEntity model){
+	public ResponseEntity<?> login(@RequestBody customerEntity model,HttpSession session){
 		customerEntity customer = new customerEntity();
 		customer = customerRe.findByName(model.getName());
 		if(customer.getName().equals(model.getName())  && customer.getPassword().equals(model.getPassword())) {
-			return ResponseEntity.ok(model);
+			session.setAttribute("id_user" , customer.getId());
+			return ResponseEntity.ok(model);   
 		}
 		else if(!customer.getPassword().equals(model.getPassword())){
 			return ResponseEntity.badRequest().body("Sai thông tin mật khẩu");
@@ -41,6 +44,12 @@ public class customerAPI {
 		else{
 			return ResponseEntity.badRequest().body("Tài khoản không tồn tại");
 		}
+		
+	}
+	@PostMapping("/customer/logout")
+	public ResponseEntity<?> logout(HttpSession session){
+		session.removeAttribute("id_user");
+		return ResponseEntity.ok(null);
 		
 	}
 	@GetMapping("/customer/new")

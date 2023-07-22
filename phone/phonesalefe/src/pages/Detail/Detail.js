@@ -14,14 +14,27 @@ function formatNumber(number) {
 function Detail() {
     const id = localStorage.getItem('productId');
     const [product, setProduct] = useState([]);
+
     useEffect(() => {
         fetch(`http://localhost:8080/productid/${id}`)
             .then((res) => res.json())
             .then((res) => {
                 setProduct(res);
             });
-    });
+    }, [id]);
     const price = product.price ? formatNumber(product.price) : '';
+    const addCart = async (userName, productId) => {
+        const fetchOptions = {
+            method: 'POST',
+        };
+        const addAPI = `http://localhost:8080/customer/${userName}/${productId}`;
+        const response = await fetch(addAPI, fetchOptions);
+        if (!response.ok) {
+            alert('fail');
+        } else {
+            window.location.href = '/cart';
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('taskbar')}>
@@ -29,7 +42,6 @@ function Detail() {
             </div>
             <div className={cx('info_product')}>
                 <div className={cx('header')}>
-                    <p>Điện thoại di động</p>
                     <p>{product.name} - </p>
                     <p>{product.memory}</p>
                 </div>
@@ -68,7 +80,10 @@ function Detail() {
                                     <p>Công ty Tài chính</p>
                                     <p>Hoặc 0% qua thẻ tín dụng</p>
                                 </div>
-                                <div className={cx('addcart')}>
+                                <div
+                                    className={cx('addcart')}
+                                    onClick={() => addCart(sessionStorage.getItem('user'), product.id)}
+                                >
                                     <FontAwesomeIcon icon={faCartPlus} />
                                     <p>Thêm vào giỏ hàng</p>
                                 </div>

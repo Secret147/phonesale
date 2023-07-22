@@ -4,6 +4,7 @@ import Input from '~/components/Input/Input';
 import Form from '~/components/Form/Form';
 import Button from '~/components/Button/Button';
 import { useState } from 'react';
+import Cookies from 'js-cookie';
 
 const cx = classNames.bind(styles);
 
@@ -31,6 +32,8 @@ function Login() {
             alert('Tài khoản hoặc mật khẩu không đúng');
         } else {
             window.location.href = '/';
+            Cookies.set('user', customer.name, { expires: 1 / 24 });
+            sessionStorage.setItem('user', customer.name);
         }
     };
     return (

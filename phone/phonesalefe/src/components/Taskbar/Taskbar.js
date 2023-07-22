@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-function Taskbar({ setProducts }) {
+function Taskbar({ setProducts, onClick }) {
     const fetchProduct = (type) => {
         fetch(`http://localhost:8080/product/${type}`)
             .then((res) => res.json())
@@ -15,7 +15,7 @@ function Taskbar({ setProducts }) {
     };
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('task')}>
+            <div className={cx('task')} onClick={onClick}>
                 <Task icon={faMobile} name="Điện thoại" onClick={() => fetchProduct('dt')} />
                 <Task icon={faClock} name="Đồng hồ" onClick={() => fetchProduct('DH')} />
                 <Task icon={faLaptop} name="Laptop" onClick={() => fetchProduct('MT')} />

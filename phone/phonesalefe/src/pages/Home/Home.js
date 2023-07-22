@@ -24,6 +24,7 @@ function Home() {
     // const [productpage, setProductpage] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+    const [check, setCheck] = useState(true);
     // useEffect(() => {
     //     fetch(productsAPI)
     //         .then((res) => res.json())
@@ -53,14 +54,13 @@ function Home() {
     const handlePageChange = (selectedPage) => {
         setCurrentPage(selectedPage);
     };
-    let checktask = true;
+
     return (
         <div className={cx('wrapper')}>
             <Taskbar
                 setProducts={setProducts}
-                onChange={() => {
-                    checktask = false;
-                    alert(checktask);
+                onClick={() => {
+                    setCheck(false);
                 }}
             ></Taskbar>
             <div className={cx('slider')}>
@@ -88,7 +88,7 @@ function Home() {
             </div>
             <div className={cx('page')}>
                 <div className={cx('page_main')}>
-                    {checktask ? (
+                    {check ? (
                         Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                             <button key={page} onClick={() => handlePageChange(page)}>
                                 {page}
