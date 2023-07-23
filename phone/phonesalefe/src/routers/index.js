@@ -1,4 +1,4 @@
-import Cart from '~/pages/Cart';
+import Cart from '~/pages/Cart/Cart';
 import Detail from '~/pages/Detail/Detail';
 import Home from '~/pages/Home/Home';
 import Login from '~/pages/Login/Login';

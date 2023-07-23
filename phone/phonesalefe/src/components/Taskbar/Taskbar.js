@@ -7,7 +7,7 @@ const cx = classNames.bind(styles);
 
 function Taskbar({ setProducts, onClick }) {
     const fetchProduct = (type) => {
-        fetch(`http://localhost:8080/product/${type}`)
+        fetch(`http://localhost:8080/prouct/${type}`)
             .then((res) => res.json())
             .then((res) => {
                 setProducts(res);

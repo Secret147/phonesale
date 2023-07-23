@@ -1,6 +1,7 @@
 package phonesale.api;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class productAPI {
 			customer.getProducts().add(product);
 
 			customerRe.save(customer);
-			return ResponseEntity.ok(null);
+			return ResponseEntity.ok(customer);
 		} else {
 			return ResponseEntity.badRequest().body(null);
 		}
@@ -77,7 +78,15 @@ public class productAPI {
 	public ResponseEntity<?> getProduct(@PathVariable("username") String username){
 		customerEntity customer = customerRe.findByName(username);
 		List<productEntity> products = new ArrayList<>(customer.getProducts());
+		products.sort(Comparator.comparing(productEntity::getId).reversed());
 		return ResponseEntity.ok(products);
+	}
+	@GetMapping("/product/size/{username}")
+	public ResponseEntity<?> countProduct(@PathVariable("username") String username){
+		customerEntity customer = customerRe.findByName(username);
+		List<productEntity> products = new ArrayList<>(customer.getProducts());
+		
+		return ResponseEntity.ok(products.size());
 	}
 
 }

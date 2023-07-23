@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import Input from '~/components/Input/Input';
 import Form from '~/components/Form/Form';
 import Button from '~/components/Button/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 
 const cx = classNames.bind(styles);
@@ -19,6 +19,16 @@ function Login() {
         const { name, value } = event.target;
         setCustomer({ ...customer, [name]: value });
     };
+    const resetForm = () => {
+        setCustomer({
+            name: '',
+            password: '',
+            role: 0,
+        });
+    };
+
+    // Gọi hàm này khi thành phần gắn kết để đặt lại biểu mẫu
+
     const handleSubmit = async (event) => {
         const fetchOptions = {
             method: 'POST',
@@ -33,7 +43,6 @@ function Login() {
         } else {
             window.location.href = '/';
             Cookies.set('user', customer.name, { expires: 1 / 24 });
-            sessionStorage.setItem('user', customer.name);
         }
     };
     return (

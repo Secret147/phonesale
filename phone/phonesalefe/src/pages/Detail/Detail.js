@@ -6,6 +6,7 @@ import SliderComponent from '~/components/SliderComponent/SliderComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus, faCheck, faTruckFast, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 
 const cx = classNames.bind(styles);
 function formatNumber(number) {
@@ -80,10 +81,7 @@ function Detail() {
                                     <p>Công ty Tài chính</p>
                                     <p>Hoặc 0% qua thẻ tín dụng</p>
                                 </div>
-                                <div
-                                    className={cx('addcart')}
-                                    onClick={() => addCart(sessionStorage.getItem('user'), product.id)}
-                                >
+                                <div className={cx('addcart')} onClick={() => addCart(Cookies.get('user'), product.id)}>
                                     <FontAwesomeIcon icon={faCartPlus} />
                                     <p>Thêm vào giỏ hàng</p>
                                 </div>

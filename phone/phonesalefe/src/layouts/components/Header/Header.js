@@ -10,11 +10,18 @@ import Cookies from 'js-cookie';
 const cx = classNames.bind(styles);
 function Header() {
     const [checkuser, setCheckuser] = useState(false);
-
+    const [count, setCount] = useState(0);
     useEffect(() => {
         if (!Cookies.get('user')) {
             setCheckuser(true);
         }
+    }, []);
+    useEffect(() => {
+        fetch(`http://localhost:8080/product/size/${Cookies.get('user')}`)
+            .then((res) => res.json())
+            .then((res) => {
+                setCount(res);
+            });
     }, []);
     const logout = async () => {
         const fetchOptions = {
@@ -28,7 +35,7 @@ function Header() {
         if (response.ok) {
             Cookies.remove('user');
             setCheckuser(false);
-            window.location.reload();
+            window.location.href = '/';
         }
     };
     return (
@@ -58,7 +65,7 @@ function Header() {
                             <FontAwesomeIcon icon={faCartShopping} />
                         </Link>
                         <div className={cx('number')}>
-                            <span>2</span>
+                            <span>{count}</span>
                         </div>
                     </div>
                     <div className={cx('truck')}>

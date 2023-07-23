@@ -19,19 +19,12 @@ function formatNumber(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 }
 function Home() {
-    // const productsAPI = 'http://localhost:8080/product/new';
     const [products, setProducts] = useState([]);
-    // const [productpage, setProductpage] = useState([]);
+
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [check, setCheck] = useState(true);
-    // useEffect(() => {
-    //     fetch(productsAPI)
-    //         .then((res) => res.json())
-    //         .then((res) => {
-    //             setProducts(res);
-    //         });
-    // }, []);
+
     const fetchData = (page, limit) => {
         fetch(`http://localhost:8080/product/pages?page=${page}&limit=${limit}`)
             .then((res) => res.json())
