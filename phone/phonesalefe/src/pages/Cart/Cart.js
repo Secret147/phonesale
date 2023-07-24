@@ -11,17 +11,43 @@ function formatNumber(number) {
 function Cart() {
     const [products, setProducts] = useState([]);
     const [totalpay, setTotalpay] = useState(0);
-    useEffect(() => {
-        fetch(`http://localhost:8080/product/${Cookies.get('user')}`)
+
+    const getProduct = (api) => {
+        fetch(`http://localhost:8080/product2/${Cookies.get('user')}`)
             .then((res) => res.json())
             .then((res) => {
                 setProducts(res);
-                const totalPrice = res.reduce((accumulator, product) => {
-                    return accumulator + product.price;
-                }, 0);
-                setTotalpay(totalPrice);
+            });
+    };
+    useEffect(() => {
+        fetch(`http://localhost:8080/cart/totalprice/${Cookies.get('user')}`)
+            .then((res) => res.json())
+            .then((res) => {
+                setTotalpay(res);
             });
     }, []);
+
+    useEffect(() => {
+        if (Cookies.get('user')) {
+            getProduct();
+        }
+    }, []);
+    const deleteProduct = async (productId) => {
+        const fetchOptions = {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json',
+            },
+        };
+        const deleteAPI = `http://localhost:8080/cart/product/${productId}`;
+        const response = await fetch(deleteAPI, fetchOptions);
+        if (response.ok) {
+            getProduct();
+            window.location.reload();
+        } else {
+            alert('fail');
+        }
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -34,6 +60,8 @@ function Cart() {
                             img={product.img}
                             price={formatNumber(product.price)}
                             memory={product.memory}
+                            onClick={() => deleteProduct(product.id)}
+                            productId={product.id}
                         ></CartItem>
                     );
                 })}

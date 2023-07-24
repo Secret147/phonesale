@@ -16,12 +16,17 @@ function Header() {
             setCheckuser(true);
         }
     }, []);
+
     useEffect(() => {
-        fetch(`http://localhost:8080/product/size/${Cookies.get('user')}`)
-            .then((res) => res.json())
-            .then((res) => {
-                setCount(res);
-            });
+        if (Cookies.get('user')) {
+            fetch(`http://localhost:8080/size/${Cookies.get('user')}`)
+                .then((res) => res.json())
+                .then((res) => {
+                    setCount(res);
+                });
+        } else {
+            setCount(0);
+        }
     }, []);
     const logout = async () => {
         const fetchOptions = {

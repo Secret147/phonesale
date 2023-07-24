@@ -44,7 +44,6 @@ public class customerAPI {
 		else{
 			return ResponseEntity.badRequest().body("Tài khoản không tồn tại");
 		}
-		
 	}
 	@PostMapping("/customer/logout")
 	public ResponseEntity<?> logout(HttpSession session){

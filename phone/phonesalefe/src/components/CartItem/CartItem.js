@@ -1,26 +1,82 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './CartItem.module.scss';
 import classNames from 'classnames/bind';
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faChevronLeft, faChevronRight, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function CartItem({ img, name, memory, price }) {
+function CartItem({ img, name, memory, price, onClick, productId }) {
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        fetch(`http://localhost:8080/cart/quantity/${productId}`)
+            .then((res) => res.json())
+            .then((res) => {
+                setCount(res);
+            });
+    }, [productId]);
+    const up = async () => {
+        const fetchOptions = {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+        };
+        const response = await fetch(`http://localhost:8080/cart/up/${productId}`, fetchOptions);
+        if (response) {
+            window.location.reload();
+        } else {
+            alert('fail');
+        }
+    };
+    const down = async () => {
+        const fetchOptions = {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+        };
+        const response = await fetch(`http://localhost:8080/cart/down/${productId}`, fetchOptions);
+        if (response) {
+            window.location.reload();
+        } else {
+            alert('fail');
+        }
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('main_item')}>
-                <div className={cx('cancel')}>
+                <div className={cx('cancel')} onClick={onClick}>
                     <FontAwesomeIcon icon={faXmark} />
                 </div>
-                <div className={cx('main')}>
-                    <div className={cx('img')}>
-                        <img src={img} alt="anh"></img>
+                <div className={cx('left_item')}>
+                    <div className={cx('main')}>
+                        <div className={cx('img')}>
+                            <img src={img} alt="anh"></img>
+                        </div>
+                        <div className={cx('name')}>
+                            <span className={cx('label')}>{name}</span>
+                            <span className={cx('memory')}>{memory}</span>
+                            <div className={cx('price')}>
+                                <p>Giá: {price} đ</p>
+                            </div>
+                        </div>
                     </div>
-                    <div className={cx('name')}>
-                        <span className={cx('label')}>{name}</span>
-                        <span className={cx('memory')}>{memory}</span>
-                        <div className={cx('price')}>
-                            <p>Giá: {price} đ</p>
+                    <div className={cx('count_main')}>
+                        <div>
+                            <p className={cx('count_header')}>Số lượng</p>
+                        </div>
+                        <div className={cx('count')}>
+                            <div className={cx('count_left')} onClick={() => down()}>
+                                <FontAwesomeIcon icon={faChevronLeft} />
+                            </div>
+                            <div className={cx('count_center')}>
+                                <p>{count}</p>
+                            </div>
+
+                            <div className={cx('count_right')} onClick={() => up()}>
+                                <FontAwesomeIcon icon={faChevronRight} />
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -6,9 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.ManyToAny;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -33,7 +33,8 @@ public class productEntity {
 	
 	private String type;
 	
-	@ManyToMany(mappedBy = "products")
-    private List<customerEntity> customers = new ArrayList<>();
+	@OneToMany(mappedBy = "product")
+	@JsonIgnore
+    private List<cartEntity> carts = new ArrayList<>();
 
 }

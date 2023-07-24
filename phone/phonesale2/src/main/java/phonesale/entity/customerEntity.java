@@ -8,7 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,9 +35,9 @@ public class customerEntity {
 
 	private int role;
 
-	@ManyToMany
-	@JoinTable(name = "customer_product")
+	@OneToMany(mappedBy = "customer")
 	@JsonIgnore
-	private List<productEntity> products = new ArrayList<>();
+    private List<cartEntity> carts = new ArrayList<>();
+
 
 }

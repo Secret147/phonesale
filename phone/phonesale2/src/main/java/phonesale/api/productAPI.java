@@ -3,12 +3,14 @@ package phonesale.api;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,8 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import phonesale.api.output.productOutout;
 import phonesale.entity.customerEntity;
 import phonesale.entity.productEntity;
+import phonesale.entity.cartEntity;
+import phonesale.repository.cartRepository;
 import phonesale.repository.customerRepository;
 import phonesale.repository.productRepository;
+import phonesale.service.productService;
 
 @RestController
 @CrossOrigin
@@ -30,11 +35,18 @@ public class productAPI {
 	@Autowired
 	private customerRepository customerRe;
 
+	@Autowired
+	private productService productSe;
+
+	@Autowired
+	private cartRepository cartRe;
+
 	@GetMapping("/prouct/{type}")
 	public ResponseEntity<?> gProductDt(@PathVariable("type") String type) {
 		List<productEntity> products = productRe.findByType(type);
 		return ResponseEntity.ok(products);
 	}
+
 	@GetMapping("/productid/{id}")
 	public ResponseEntity<?> gProductid(@PathVariable("id") Long id) {
 		productEntity product = productRe.findById(id).get();
@@ -63,30 +75,24 @@ public class productAPI {
 			@PathVariable("productId") Long productId) {
 		customerEntity customer = customerRe.findByName(username);
 		productEntity product = productRe.findById(productId).get();
-		if (customer != null && product != null) {
-
-			customer.getProducts().add(product);
-
-			customerRe.save(customer);
-			return ResponseEntity.ok(customer);
-		} else {
-			return ResponseEntity.badRequest().body(null);
+		cartEntity cart = cartRe.findByProduct_Id(product.getId());
+		if(cart!=null) {			
+		    cart.setQuantity(cart.getQuantity()+1);	
+		    cartRe.save(cart);
 		}
-
-	}
-	@GetMapping("/product/{username}")
-	public ResponseEntity<?> getProduct(@PathVariable("username") String username){
-		customerEntity customer = customerRe.findByName(username);
-		List<productEntity> products = new ArrayList<>(customer.getProducts());
-		products.sort(Comparator.comparing(productEntity::getId).reversed());
-		return ResponseEntity.ok(products);
-	}
-	@GetMapping("/product/size/{username}")
-	public ResponseEntity<?> countProduct(@PathVariable("username") String username){
-		customerEntity customer = customerRe.findByName(username);
-		List<productEntity> products = new ArrayList<>(customer.getProducts());
-		
-		return ResponseEntity.ok(products.size());
+		else if(cart==null){	
+			cartEntity cart2= new cartEntity();
+			cart2.setCustomer(customer);
+			cart2.setProduct(product);
+			cart2.setQuantity(1);
+			cartRe.save(cart2);	
+		}	
+		return ResponseEntity.ok(customer);
 	}
 
+	
+//	@GetMapping("/quanlity/{productId}/{username}")
+//    public ResponseEntity<?> quanlityProduct(@PathVariable("productId") Long productId,@PathVariable("username") String username){
+//		
+//	}
 }
