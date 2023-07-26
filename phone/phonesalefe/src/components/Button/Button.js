@@ -9,6 +9,7 @@ function Button({
     primary = false,
     normal = false,
     small = false,
+    large = false,
     className,
     leftIcon,
     rightIcon,
@@ -33,6 +34,7 @@ function Button({
         primary,
         normal,
         small,
+        large,
     });
     return (
         <Comp className={classes} {...props} type={type}>

@@ -2,6 +2,7 @@ import styles from './Cart.module.scss';
 import classNames from 'classnames/bind';
 import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import CartItem from '~/components/CartItem/CartItem';
 
 const cx = classNames.bind(styles);
@@ -11,27 +12,15 @@ function formatNumber(number) {
 function Cart() {
     const [products, setProducts] = useState([]);
     const [totalpay, setTotalpay] = useState(0);
+    const [checkItem, setCheckitem] = useState(false);
 
-    const getProduct = (api) => {
+    const getProduct = () => {
         fetch(`http://localhost:8080/product2/${Cookies.get('user')}`)
             .then((res) => res.json())
             .then((res) => {
                 setProducts(res);
             });
     };
-    useEffect(() => {
-        fetch(`http://localhost:8080/cart/totalprice/${Cookies.get('user')}`)
-            .then((res) => res.json())
-            .then((res) => {
-                setTotalpay(res);
-            });
-    }, []);
-
-    useEffect(() => {
-        if (Cookies.get('user')) {
-            getProduct();
-        }
-    }, []);
     const deleteProduct = async (productId) => {
         const fetchOptions = {
             method: 'DELETE',
@@ -49,33 +38,67 @@ function Cart() {
         }
     };
 
+    useEffect(() => {
+        fetch(`http://localhost:8080/cart/totalprice/${Cookies.get('user')}`)
+            .then((res) => res.json())
+            .then((res) => {
+                setTotalpay(res);
+            });
+    }, []);
+
+    useEffect(() => {
+        if (Cookies.get('user')) {
+            getProduct();
+        }
+    }, [checkItem]);
+    useEffect(() => {
+        if (products.length > 0) {
+            setCheckitem(true);
+        } else {
+            setCheckitem(false);
+        }
+    }, [products]);
+
     return (
-        <div className={cx('wrapper')}>
-            <div className={cx('main')}>
-                {products.map((product) => {
-                    return (
-                        <CartItem
-                            key={product.id}
-                            name={product.name}
-                            img={product.img}
-                            price={formatNumber(product.price)}
-                            memory={product.memory}
-                            onClick={() => deleteProduct(product.id)}
-                            productId={product.id}
-                        ></CartItem>
-                    );
-                })}
-            </div>
-            <div className={cx('pay')}>
-                <div className={cx('pay_main')}>
-                    <p>Tổng tiền tạm tính:</p>
-                    <span> {formatNumber(totalpay)}</span>
+        <>
+            {checkItem ? (
+                <div className={cx('wrapper')}>
+                    <div className={cx('main')}>
+                        {products.map((product) => {
+                            return (
+                                <CartItem
+                                    key={product.id}
+                                    name={product.name}
+                                    img={product.img}
+                                    price={formatNumber(product.price)}
+                                    memory={product.memory}
+                                    onClick={() => deleteProduct(product.id)}
+                                    productId={product.id}
+                                ></CartItem>
+                            );
+                        })}
+                    </div>
+                    <div className={cx('pay')}>
+                        <div className={cx('pay_main')}>
+                            <p>Tổng tiền tạm tính:</p>
+                            <span> {formatNumber(totalpay)}</span>
+                        </div>
+                        <div className={cx('paid')}>
+                            <Link to={'/formorder'}>
+                                <p>Tiến hành đặt hàng</p>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
-                <div className={cx('paid')}>
-                    <p>Tiến hành đặt hàng</p>
+            ) : (
+                <div className={cx('null_product')}>
+                    <div className={cx('null_main')}>
+                        <img src="https://hoanghamobile.com/Content/web/content-icon/no-item.png" alt="no_item"></img>
+                        <p>Hiện chưa có sản phẩm trong giỏ hàng</p>
+                    </div>
                 </div>
-            </div>
-        </div>
+            )}
+        </>
     );
 }
 export default Cart;

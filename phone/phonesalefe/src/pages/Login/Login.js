@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import Input from '~/components/Input/Input';
 import Form from '~/components/Form/Form';
 import Button from '~/components/Button/Button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Cookies from 'js-cookie';
 
 const cx = classNames.bind(styles);
@@ -18,13 +18,6 @@ function Login() {
     const inputChange = (event) => {
         const { name, value } = event.target;
         setCustomer({ ...customer, [name]: value });
-    };
-    const resetForm = () => {
-        setCustomer({
-            name: '',
-            password: '',
-            role: 0,
-        });
     };
 
     // Gọi hàm này khi thành phần gắn kết để đặt lại biểu mẫu

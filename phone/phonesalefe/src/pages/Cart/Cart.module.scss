@@ -22,7 +22,7 @@
     }
 }
 .paid {
-    background-color: var(--primary);
+    background: var(--primarybackground);
     border-radius: var(--border-task);
     margin-top: 16px;
     p {
@@ -35,5 +35,18 @@
     }
     &:hover {
         opacity: 0.8;
+    }
+}
+.null_product {
+    display: flex;
+    justify-content: center;
+    margin: 32px 0 32px 0;
+}
+.null_main {
+    p {
+        text-align: center;
+        margin-top: 8px;
+        font-size: 1.8rem;
+        font-weight: 700;
     }
 }

@@ -81,8 +81,14 @@ public class cartAPI {
 	@PostMapping("/cart/down/{productId}")
 	public ResponseEntity<?> downQuantity(@PathVariable("productId") Long productId){
 		cartEntity cart = cartRe.findByProduct_Id(productId);
-		cart.setQuantity(cart.getQuantity()-1);
-        cartRe.save(cart);
+		if(cart.getQuantity() >1) {
+			cart.setQuantity(cart.getQuantity()-1);
+	        cartRe.save(cart);
+		}
+		else {
+			cartRe.delete(cart);
+		}
+		
 		return ResponseEntity.ok(cart);
 	}
 	@DeleteMapping("/cart/product/{productId}")

@@ -8,12 +8,15 @@ const cx = classNames.bind(styles);
 
 function CartItem({ img, name, memory, price, onClick, productId }) {
     const [count, setCount] = useState(0);
-    useEffect(() => {
+    const getProduct = (productId) => {
         fetch(`http://localhost:8080/cart/quantity/${productId}`)
             .then((res) => res.json())
             .then((res) => {
                 setCount(res);
             });
+    };
+    useEffect(() => {
+        getProduct(productId);
     }, [productId]);
     const up = async () => {
         const fetchOptions = {
@@ -25,10 +28,19 @@ function CartItem({ img, name, memory, price, onClick, productId }) {
         const response = await fetch(`http://localhost:8080/cart/up/${productId}`, fetchOptions);
         if (response) {
             window.location.reload();
+            localStorage.setItem('scrollPosition', window.scrollY);
         } else {
             alert('fail');
         }
     };
+
+    useEffect(() => {
+        // Khôi phục vị trí cuộn từ LocalStorage sau khi trang được tải lại
+        const savedScrollPosition = localStorage.getItem('scrollPosition');
+        if (savedScrollPosition) {
+            window.scrollTo(0, parseInt(savedScrollPosition));
+        }
+    }, []);
     const down = async () => {
         const fetchOptions = {
             method: 'POST',
@@ -39,6 +51,7 @@ function CartItem({ img, name, memory, price, onClick, productId }) {
         const response = await fetch(`http://localhost:8080/cart/down/${productId}`, fetchOptions);
         if (response) {
             window.location.reload();
+            localStorage.setItem('scrollPosition', window.scrollY);
         } else {
             alert('fail');
         }

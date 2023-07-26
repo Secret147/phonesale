@@ -19,12 +19,15 @@
     }
 }
 .primary {
-    background-color: var(--primary);
+    background: var(--primarybackground);
 }
 .normal {
-    background-color: rgb(53, 196, 196);
+    background: var(--primarybackgroundtwo);
 }
 .small {
     padding: 10px 10px;
     width: 10rem;
+}
+.large {
+    width: 80%;
 }

@@ -23,6 +23,7 @@ function Input({ type, name, value, className, title, small, onChange, large, pl
                 onChange={onChange}
                 value={value}
                 required
+                autoComplete="off"
             />
         </div>
     );

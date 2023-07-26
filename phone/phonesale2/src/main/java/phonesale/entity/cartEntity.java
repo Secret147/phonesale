@@ -26,6 +26,9 @@ public class cartEntity {
     private productEntity product;
 
     private int quantity;
+    
+    @ManyToOne
+    private billEntity bill;
 	
 
 }
