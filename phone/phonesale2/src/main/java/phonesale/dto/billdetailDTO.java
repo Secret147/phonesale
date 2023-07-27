@@ -3,11 +3,10 @@ package phonesale.dto;
 import lombok.Data;
 
 @Data
-public class cartDTO {
+public class billdetailDTO {
 
 	private Long id;
 	
-	private Long quantity;
-	
+	private int quantity;
 
 }

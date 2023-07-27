@@ -3,7 +3,7 @@ import Detail from '~/pages/Detail/Detail';
 import FormOrder from '~/pages/FormOrder/FormOrder';
 import Home from '~/pages/Home/Home';
 import Login from '~/pages/Login/Login';
-import Order from '~/pages/Order';
+import Order from '~/pages/Order/Order';
 import Register from '~/pages/Register/Register';
 
 const publicRoutes = [

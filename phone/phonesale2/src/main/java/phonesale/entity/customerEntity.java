@@ -38,6 +38,10 @@ public class customerEntity {
 	@OneToMany(mappedBy = "customer")
 	@JsonIgnore
     private List<cartEntity> carts = new ArrayList<>();
-
+    
+    @OneToMany(mappedBy = "customerbill")
+	@JsonIgnore
+    private List<billEntity> bills = new ArrayList<>();
+    
 
 }

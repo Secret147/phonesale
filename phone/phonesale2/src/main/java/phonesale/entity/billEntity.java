@@ -9,8 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
 
@@ -46,8 +50,11 @@ public class billEntity {
     }
     
     @OneToMany(mappedBy = "bill")
-    private List<cartEntity> carts =new ArrayList<>();
+	@JsonIgnore
+    private List<billdetailEntity> billdetails = new ArrayList<>();
     
-    
-    
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private customerEntity customerbill;
+
 }

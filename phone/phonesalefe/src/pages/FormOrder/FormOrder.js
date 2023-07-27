@@ -2,6 +2,7 @@ import Button from '~/components/Button/Button';
 import styles from './FormOrder.module.scss';
 import classNames from 'classnames/bind';
 import { useState } from 'react';
+import Cookies from 'js-cookie';
 
 const cx = classNames.bind(styles);
 function FormOrder() {
@@ -18,6 +19,22 @@ function FormOrder() {
     const inputChange = (event) => {
         const { name, value } = event.target;
         setBill({ ...bill, [name]: value });
+    };
+    const saveBill = async (billAPI) => {
+        const fetchOptions = {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(bill),
+        };
+
+        const response = await fetch(billAPI, fetchOptions);
+        if (response.ok) {
+            alert('Success');
+        } else {
+            alert('fail');
+        }
     };
     return (
         <div className={cx('wrapper')}>
@@ -88,7 +105,11 @@ function FormOrder() {
                     </div>
                     <div className={cx('footer')}>
                         <div className={cx('button')}>
-                            <Button primary large>
+                            <Button
+                                primary
+                                large
+                                onClick={() => saveBill(`http://localhost:8080/bill/${Cookies.get('user')}`)}
+                            >
                                 Tiến hành đặt hàng
                             </Button>
                             <Button normal large href="/">

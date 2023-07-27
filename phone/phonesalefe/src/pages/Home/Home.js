@@ -1,12 +1,6 @@
 import styles from './Home.module.scss';
 import classNames from 'classnames/bind';
-import img1 from '~/img/1200x375_638249291555699153.jpg';
-import img2 from '~/img/realme-c55-02.jpg';
-import img3 from '~/img/tai-nghe-sennheiser-01.jpg';
-import img5 from '~/img/tv-01.jpg';
-import img6 from '~/img/watch-gt-3-web.png';
-import img7 from '~/img/web-jbl.png';
-import img8 from '~/img/webtuan-le-laptop-01.jpg';
+
 import SliderComponent from '~/components/SliderComponent/SliderComponent';
 import Item from '~/components/Item/Item';
 import { useEffect, useState } from 'react';
@@ -57,7 +51,20 @@ function Home() {
                 }}
             ></Taskbar>
             <div className={cx('slider')}>
-                <SliderComponent arrImg={[img1, img2, img3, img5, img6, img7, img8]} />
+                <SliderComponent
+                    arrImg={[
+                        'https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/11/tv-xiaomi-thang-7-01.jpg',
+                        'https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/19/iphone-14-pro-max-01.jpg',
+                        'https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/23/1200x375.jpg',
+                        'https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/24/untitled-1-01-1.png',
+                        'https://cdn.hoanghamobile.com/i/home/Uploads/2023/06/06/tv-01.jpg',
+                        'https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/13/c32-banner-1.jpg',
+                        'https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/10/tai-nghe-sennheiser-01.jpg',
+                        'https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/03/s20-fe-1200x382.png',
+                        'https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/10/web-dat-diem-cao-sale-bao-khung-01.jpg',
+                        'https://cdn.hoanghamobile.com/i/home/Uploads/2023/07/14/1200x375.jpg',
+                    ]}
+                />
             </div>
             <div className={cx('item')}>
                 <div className={cx('item_main')}>

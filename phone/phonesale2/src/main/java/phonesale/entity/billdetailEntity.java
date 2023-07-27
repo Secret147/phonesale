@@ -9,22 +9,20 @@ import javax.persistence.ManyToOne;
 
 import lombok.Data;
 
-@Data
 @Entity
-public class cartEntity {
-
+@Data
+public class billdetailEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	private int quantity;
+	
 	@ManyToOne
-    @JoinColumn(name = "customer_id")
-    private customerEntity customer;
+    @JoinColumn(name = "bill_id")
+    private billEntity bill;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private productEntity product;
-
-    private int quantity;
-
+    private productEntity productbill;
 }
