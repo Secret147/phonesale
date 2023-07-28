@@ -1,5 +1,6 @@
 .wrapper {
     position: relative;
+    background: var(--backgroundcolor);
 }
 
 .slider {
@@ -41,7 +42,7 @@
 .page {
     display: flex;
     justify-content: center;
-    margin: 0 0 32px 0;
+    padding: 0 0 32px 0;
     .page_main {
     }
     button {

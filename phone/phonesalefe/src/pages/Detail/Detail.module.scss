@@ -1,4 +1,5 @@
 .wrapper {
+    background-color: var(--backgroundcolor);
 }
 
 .info_product {
@@ -146,7 +147,7 @@
 }
 .description {
     width: var(--width-basic);
-    margin-bottom: 32px;
+    padding-bottom: 32px;
 }
 .description_header {
     p {

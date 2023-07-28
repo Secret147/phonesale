@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,6 +69,14 @@ public class billAPI {
 		customerEntity customer = customerRe.findByName(username);
 		List<billEntity> bills = billRe.findByCustomerbill_Id(customer.getId());
 		return ResponseEntity.ok(bills);
+	}
+	@DeleteMapping("/bill/{billid}")
+	public ResponseEntity<?> deleteBill(@PathVariable("billid") Long billId){
+		billEntity bill = billRe.findById(billId).get();
+		List<billdetailEntity> billdetails = billdetailRe.findAllByBill_Id(billId);
+		billdetailRe.deleteAll(billdetails);
+		billRe.delete(bill);
+		return ResponseEntity.ok(null);
 	}
 	
 

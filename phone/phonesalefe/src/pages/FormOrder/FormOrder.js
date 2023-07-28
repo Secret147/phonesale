@@ -31,7 +31,7 @@ function FormOrder() {
 
         const response = await fetch(billAPI, fetchOptions);
         if (response.ok) {
-            alert('Success');
+            window.location.href = '/order';
         } else {
             alert('fail');
         }

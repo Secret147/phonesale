@@ -88,6 +88,11 @@ function Cart() {
                                 <p>Tiến hành đặt hàng</p>
                             </Link>
                         </div>
+                        <div className={cx('paid', 'custom')}>
+                            <Link to={'/'}>
+                                <p>Chọn thêm sản phẩm khác</p>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             ) : (

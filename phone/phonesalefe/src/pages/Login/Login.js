@@ -22,7 +22,7 @@ function Login() {
 
     // Gọi hàm này khi thành phần gắn kết để đặt lại biểu mẫu
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async () => {
         const fetchOptions = {
             method: 'POST',
             headers: {
@@ -49,7 +49,7 @@ function Login() {
                 value={customer.password}
             />
             <div className={cx('btn_submit')}>
-                <Button primary type="submit">
+                <Button primary onClick={() => handleSubmit()}>
                     Login
                 </Button>
                 <br></br>

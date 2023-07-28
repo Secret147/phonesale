@@ -3,6 +3,7 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    background-color: var(--backgroundcolor);
     .main {
         width: var(--width-basic);
         margin-top: 32px;
@@ -33,9 +34,13 @@
         padding: 8px 0;
         user-select: none;
     }
+
     &:hover {
         opacity: 0.8;
     }
+}
+.custom {
+    background: var(--primarybackgroundtwo);
 }
 .null_product {
     display: flex;
