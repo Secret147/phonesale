@@ -11,7 +11,7 @@
     width: var(--width-basic);
 }
 .logo {
-    width: 30%;
+    width: 20%;
     display: flex;
     align-items: center;
 
@@ -27,7 +27,8 @@
 .search {
     display: flex;
     align-items: center;
-    width: 30%;
+    width: 40%;
+    position: relative;
 
     .search_main {
         display: flex;
@@ -75,14 +76,14 @@
 .input_header {
     width: 80%;
     input {
-        padding: 8px;
+        padding: 12px;
         padding-left: 16px;
         border: 2px solid gray;
         outline: none;
         border-right: none;
         font-size: 1.8rem;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
+        border-top-left-radius: 26px;
+        border-bottom-left-radius: 26px;
         width: 100%;
     }
 }
@@ -90,12 +91,12 @@
 .search_btn {
     color: gray;
     font-size: 2rem;
-    height: 4rem;
+    height: 4.8rem;
     border: 2px solid gray;
-    border-top-right-radius: 20px;
+    border-top-right-radius: 26px;
     border-left: 0.5px solid gray;
-    border-bottom-right-radius: 20px;
-    line-height: 3.9rem;
+    border-bottom-right-radius: 26px;
+    line-height: 47px;
     width: 15%;
     background-color: #f8f8f8;
     text-align: center;
@@ -107,14 +108,40 @@
     color: black;
     font-size: 1.8rem;
     width: 30%;
+    position: relative;
     .user_main {
         float: right;
         display: flex;
+        user-select: none;
     }
     label {
         margin-left: 8px;
     }
 }
+
+.logout {
+    background: var(--primarybackground);
+    position: absolute;
+    top: 46px;
+    right: -25px;
+    width: 50%;
+    user-select: none;
+    z-index: 100;
+}
+.logout_item {
+    &:hover {
+        background: var(--primarybackgroundtwo);
+    }
+    display: flex;
+    align-items: center;
+    p {
+        font-size: 2rem;
+        font-weight: 700;
+        color: white;
+        padding: 4px 0 4px 8px;
+    }
+}
+
 .btn_header {
     width: 30%;
     .btn_main {
@@ -124,6 +151,20 @@
         display: flex;
     }
 }
+.listproduct {
+    width: 86%;
+    height: 300px;
+    overflow-y: auto;
+    background-color: white;
+    position: absolute;
+    z-index: 1;
+    top: 57px;
+    left: 9px;
+    border-top: none;
+}
+.listproduct_main {
+}
+
 @media (max-width: 1120px) {
     .btn_header,
     .user {

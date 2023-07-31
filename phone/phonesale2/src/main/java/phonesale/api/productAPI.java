@@ -89,10 +89,14 @@ public class productAPI {
 		}	
 		return ResponseEntity.ok(customer);
 	}
-
+    @GetMapping("/product/search")
+    public ResponseEntity<?> searchProduct(@RequestParam(value="key",required = false)String key){
+    	if(key==null) {
+    		return ResponseEntity.ok(null);
+    	}
+    	List<productEntity> products = productSe.searchProducts(key);
+    	return ResponseEntity.ok(products);
+    }
 	
-//	@GetMapping("/quanlity/{productId}/{username}")
-//    public ResponseEntity<?> quanlityProduct(@PathVariable("productId") Long productId,@PathVariable("username") String username){
-//		
-//	}
+
 }

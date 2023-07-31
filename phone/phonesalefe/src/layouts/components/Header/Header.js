@@ -4,13 +4,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faCartShopping, faTruck, faUser } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button/Button';
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Cookies from 'js-cookie';
+import SearchItem from '~/components/SearchItem/SearchItem';
 
 const cx = classNames.bind(styles);
+function debounce(func, delay) {
+    let timerId;
+    function debounced(...args) {
+        clearTimeout(timerId);
+        timerId = setTimeout(() => {
+            func.apply(this, args);
+        }, delay);
+    }
+    debounced.cancel = () => {
+        clearTimeout(timerId);
+    };
+    return debounced;
+}
 function Header() {
     const [checkuser, setCheckuser] = useState(false);
     const [count, setCount] = useState(0);
+    const [products, setProducts] = useState([]);
+    const [input, setInput] = useState('');
+    const [checkProduct, setCheckproduct] = useState(false);
+    const searchRef = useRef(null);
+
+    const [checkLog, setCheckLog] = useState(false);
     useEffect(() => {
         if (!Cookies.get('user')) {
             setCheckuser(true);
@@ -28,6 +48,38 @@ function Header() {
             setCount(0);
         }
     }, []);
+    useEffect(() => {
+        // Gọi API tìm kiếm khi input thay đổi, áp dụng debounce 500ms
+        const searchDebounced = debounce((searchText) => {
+            fetch(`http://localhost:8080/product/search?key=${searchText}`)
+                .then((res) => res.json())
+                .then((res) => {
+                    setProducts(res);
+                })
+                .catch((error) => {
+                    // Xử lý lỗi nếu cần
+                });
+        }, 1000);
+
+        searchDebounced(input);
+
+        // Clean up khi component unmount
+        return () => {
+            searchDebounced.cancel(); // Nếu bạn triển khai debounce theo cách cho phép hủy bỏ timeout
+        };
+    }, [input]);
+    useEffect(() => {
+        if (products.length > 0) {
+            setCheckproduct(true);
+        } else {
+            setCheckproduct(false);
+        }
+    }, [products]);
+    const next = (id) => {
+        window.location.href = `/detail`;
+        localStorage.setItem('productId', id);
+    };
+
     const logout = async () => {
         const fetchOptions = {
             method: 'POST',
@@ -43,6 +95,32 @@ function Header() {
             window.location.href = '/';
         }
     };
+    const handleChange = (event) => {
+        setInput(event.target.value);
+    };
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            // Kiểm tra xem sự kiện click có xảy ra bên ngoài phạm vi thẻ div có class là 'search' hay không
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
+                setCheckproduct(false);
+            }
+        };
+
+        // Thêm event listener cho sự kiện click toàn cục
+        document.addEventListener('click', handleOutsideClick);
+
+        return () => {
+            // Làm sạch event listener khi component unmount
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, []);
+
+    const checkLogout = () => {
+        setCheckLog(true);
+    };
+    const checkLeave = () => {
+        setCheckLog(false);
+    };
     return (
         <div className={cx('wrapper')}>
             <div className={cx('main')}>
@@ -54,15 +132,32 @@ function Header() {
                         ></img>
                     </a>
                 </div>
-                <div className={cx('search')}>
+                <div className={cx('search')} ref={searchRef}>
                     <div className={cx('search_main')}>
                         <div className={cx('input_header')}>
-                            <input type="text" placeholder="Search"></input>
+                            <input type="text" placeholder="Search" onChange={handleChange}></input>
                         </div>
                         <div className={cx('search_btn')}>
                             <FontAwesomeIcon icon={faMagnifyingGlass} />
                         </div>
                     </div>
+                    {checkProduct ? (
+                        <div className={cx('listproduct')}>
+                            <div className={cx('listproduct_main')}>
+                                {products.map((product) => {
+                                    return (
+                                        <SearchItem
+                                            product={product}
+                                            key={product.id}
+                                            onClick={() => next(product.id)}
+                                        ></SearchItem>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    ) : (
+                        <div></div>
+                    )}
                 </div>
                 <div className={cx('icon')}>
                     <div className={cx('cart')}>
@@ -92,14 +187,35 @@ function Header() {
                     </div>
                 ) : (
                     <div className={cx('user')}>
-                        <div className={cx('user_main')}>
-                            <div onClick={() => logout()}>
+                        <div className={cx('user_main')} onClick={() => checkLogout()}>
+                            <div className={cx('user_icon')}>
                                 <FontAwesomeIcon icon={faUser} />
                             </div>
                             <div>
                                 <label>{Cookies.get('user')}</label>
                             </div>
                         </div>
+                        {checkLog ? (
+                            <div
+                                className={cx('logout')}
+                                onMouseEnter={() => checkLogout()}
+                                onMouseLeave={() => checkLeave()}
+                            >
+                                <div className={cx('logout_main')}>
+                                    <div className={cx('logout_item')}>
+                                        <p>Hồ sơ</p>
+                                    </div>
+                                    <div className={cx('logout_item')}>
+                                        <p>Thông tin cá nhân</p>
+                                    </div>
+                                    <div className={cx('logout_item')} onClick={() => logout()}>
+                                        <p>Đăng xuất</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div></div>
+                        )}
                     </div>
                 )}
             </div>

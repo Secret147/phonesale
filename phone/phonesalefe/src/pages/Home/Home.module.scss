@@ -48,5 +48,12 @@
     button {
         padding: 4px 8px;
         margin-right: 4px;
+        border: 2px solid var(--primary);
+        background: white;
+        border-radius: 4px;
+        font-weight: 700;
+        &:hover {
+            opacity: 0.6;
+        }
     }
 }

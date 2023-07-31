@@ -1,11 +1,14 @@
 package phonesale.service;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import phonesale.converter.productConverter;
 import phonesale.dto.productDTO;
@@ -32,20 +35,24 @@ public class productService {
 		}
 		return results;
 	}
-	
-//	public void removeProductFromCustomer(Long customerId, Long productId) {
-//        customerEntity customer = customerRe.findById(customerId).orElse(null);
-//        productEntity product = productRe.findById(productId).orElse(null);
-//
-//        if (customer != null && product != null) {
-//            // Kiểm tra xem khách hàng có chứa sản phẩm muốn xóa không
-//            if (customer.getProducts().contains(product)) {
-//                // Xóa liên kết trong bảng trung gian
-//                customer.getProducts().remove(product);
-//                // Cập nhật khách hàng sau khi xóa sản phẩm
-//                customerRe.save(customer);
-//            }
-//        }
-//    }
+	public List<productEntity> searchProducts(String keyword) {
+        String normalizedKeyword = StringUtils.hasText(keyword) ? normalizeText(keyword) : "";
+        List<productEntity> allProductnull = new ArrayList<>();
+        List<productEntity> allProducts = productRe.findAll();
+        if(keyword != "") {
+        return allProducts.stream()
+                .filter(product -> normalizeText(product.getName()).contains(normalizedKeyword))
+                .collect(Collectors.toList());
+        }
+        else {
+        	return allProductnull;
+        }
+    }
+
+    private String normalizeText(String text) {
+        return StringUtils.hasText(text) ? Normalizer.normalize(text, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "")
+                .toLowerCase() : "";
+    }
 
 }

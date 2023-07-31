@@ -40,14 +40,8 @@ function Login() {
     };
     return (
         <Form title="Login" onSubmit={handleSubmit}>
-            <Input type="email" placeholder="Username" onChange={inputChange} name="name" value={customer.name} />
-            <Input
-                type="password"
-                placeholder="Password"
-                onChange={inputChange}
-                name="password"
-                value={customer.password}
-            />
+            <Input type="email" placeholder="Username" onChange={inputChange} name="name" />
+            <Input type="password" placeholder="Password" onChange={inputChange} name="password" />
             <div className={cx('btn_submit')}>
                 <Button primary onClick={() => handleSubmit()}>
                     Login
