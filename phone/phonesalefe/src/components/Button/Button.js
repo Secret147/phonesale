@@ -10,6 +10,7 @@ function Button({
     normal = false,
     small = false,
     large = false,
+    fullwidth = false,
     className,
     leftIcon,
     rightIcon,
@@ -36,6 +37,7 @@ function Button({
         normal,
         small,
         large,
+        fullwidth,
     });
     return (
         <Comp className={classes} {...props} type={type} onClick={onClick}>
