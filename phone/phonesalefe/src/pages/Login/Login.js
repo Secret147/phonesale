@@ -13,7 +13,6 @@ function Login() {
     const [customer, setCustomer] = useState({
         name: '',
         password: '',
-        role: 0,
     });
     const inputChange = (event) => {
         const { name, value } = event.target;
@@ -32,15 +31,17 @@ function Login() {
         };
         const response = await fetch(loginAPI, fetchOptions);
         if (!response.ok) {
-            alert('Tài khoản hoặc mật khẩu không đúng');
+            alert('Tài khoản hoặc mật khẩu không chính xác');
         } else {
+            const responseData = await response.json();
             window.location.href = '/';
+            Cookies.set('role', responseData, { expires: 1 / 24 });
             Cookies.set('user', customer.name, { expires: 1 / 24 });
         }
     };
     return (
         <Form title="Login" onSubmit={handleSubmit}>
-            <Input type="email" placeholder="Username" onChange={inputChange} name="name" />
+            <Input type="text" placeholder="Username" onChange={inputChange} name="name" />
             <Input type="password" placeholder="Password" onChange={inputChange} name="password" />
             <div className={cx('btn_submit')}>
                 <Button primary onClick={() => handleSubmit()}>

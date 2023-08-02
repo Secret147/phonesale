@@ -70,6 +70,16 @@ public class billAPI {
 		List<billEntity> bills = billRe.findByCustomerbill_Id(customer.getId());
 		return ResponseEntity.ok(bills);
 	}
+	@GetMapping("bill/all")
+	public ResponseEntity<?> getAllBill(){
+		List<billEntity> bills = billRe.findAll();
+		return ResponseEntity.ok(bills);
+	}
+	@GetMapping("bill/one/{id}")
+	public ResponseEntity<?> getOne(@PathVariable("id") Long id){
+		billEntity bill = billRe.findById(id).get();
+		return ResponseEntity.ok(bill);
+	}
 	@DeleteMapping("/bill/{billid}")
 	public ResponseEntity<?> deleteBill(@PathVariable("billid") Long billId){
 		billEntity bill = billRe.findById(billId).get();

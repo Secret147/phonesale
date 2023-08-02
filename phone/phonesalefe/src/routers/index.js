@@ -1,5 +1,5 @@
 import AdminLayOut from '~/layouts/AdminLayOut/AdminLayOut';
-import Account from '~/pages/Account/Account';
+
 import Admin from '~/pages/Admin/Admin';
 import Bill from '~/pages/Bill/Bill';
 import Cart from '~/pages/Cart/Cart';
@@ -20,7 +20,7 @@ const publicRoutes = [
     { path: '/register', component: Register, layout: null },
     { path: '/formorder', component: FormOrder, layout: null },
     { path: '/admin', component: Admin, layout: AdminLayOut },
-    { path: '/account', component: Account, layout: AdminLayOut },
+
     { path: '/bill', component: Bill, layout: AdminLayOut },
     { path: '/product', component: Product, layout: AdminLayOut },
 ];

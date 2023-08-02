@@ -40,7 +40,7 @@ function Register() {
 
     return (
         <Form title="Register" onSubmit={handleSubmit}>
-            <Input type="email" placeholder="Username" onChange={handleInputChange} name="name" value={user.name} />
+            <Input type="text" placeholder="Username" onChange={handleInputChange} name="name" value={user.name} />
             <Input
                 type="password"
                 placeholder="Password"

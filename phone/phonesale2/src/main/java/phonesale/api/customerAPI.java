@@ -7,11 +7,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+
 
 import phonesale.entity.customerEntity;
 import phonesale.repository.customerRepository;
@@ -36,14 +41,19 @@ public class customerAPI {
 		customer = customerRe.findByName(model.getName());
 		if(customer.getName().equals(model.getName())  && customer.getPassword().equals(model.getPassword())) {
 			session.setAttribute("id_user" , customer.getId());
-			return ResponseEntity.ok(model);   
+			return ResponseEntity.ok(customer.getRole());   
 		}
 		else if(!customer.getPassword().equals(model.getPassword())){
-			return ResponseEntity.badRequest().body("Sai thông tin mật khẩu");
+			return ResponseEntity.badRequest().body(new ApiResponse(false,"loi nay",null));
 		}
 		else{
-			return ResponseEntity.badRequest().body("Tài khoản không tồn tại");
+			return ResponseEntity.badRequest().body(new ApiResponse(false,"loi",null));
 		}
+	}
+	@PutMapping("/customer/new")
+	public ResponseEntity<?> editCustomer(@RequestBody customerEntity customer){
+		customerRe.save(customer);
+		return ResponseEntity.ok(null);
 	}
 	@PostMapping("/customer/logout")
 	public ResponseEntity<?> logout(HttpSession session){
@@ -55,6 +65,17 @@ public class customerAPI {
 	public List<customerEntity> getUser(){
 		List<customerEntity> customers = customerRe.findAll();
 		return customers;
+	}
+	@GetMapping("/user/{id}")
+	public ResponseEntity<?> getUser (@PathVariable("id") Long id){
+		customerEntity  customer = customerRe.findById(id).get();
+		return ResponseEntity.ok(customer);
+	}
+	@DeleteMapping("/user/{id}")
+	public ResponseEntity<?> deleteUser (@PathVariable("id") Long id){
+		customerEntity  customer = customerRe.findById(id).get();
+		customerRe.delete(customer);
+		return ResponseEntity.ok(null);
 	}
 
 }

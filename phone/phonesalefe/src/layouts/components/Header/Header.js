@@ -29,6 +29,7 @@ function Header() {
     const [input, setInput] = useState('');
     const [checkProduct, setCheckproduct] = useState(false);
     const searchRef = useRef(null);
+    const [role, setRole] = useState(true);
 
     const [checkLog, setCheckLog] = useState(false);
     useEffect(() => {
@@ -36,7 +37,13 @@ function Header() {
             setCheckuser(true);
         }
     }, []);
-
+    useEffect(() => {
+        if (Cookies.get('role') > 0) {
+            setRole(true);
+        } else {
+            setRole(false);
+        }
+    }, []);
     useEffect(() => {
         if (Cookies.get('user')) {
             fetch(`http://localhost:8080/size/${Cookies.get('user')}`)
@@ -91,6 +98,7 @@ function Header() {
         const response = await fetch('http://localhost:8080/customer/logout', fetchOptions);
         if (response.ok) {
             Cookies.remove('user');
+            Cookies.remove('role');
             setCheckuser(false);
             window.location.href = '/';
         }
@@ -202,6 +210,18 @@ function Header() {
                                 onMouseLeave={() => checkLeave()}
                             >
                                 <div className={cx('logout_main')}>
+                                    {role ? (
+                                        <div
+                                            className={cx('logout_item')}
+                                            onClick={() => {
+                                                window.location.href = '/admin';
+                                            }}
+                                        >
+                                            <p>Admin</p>
+                                        </div>
+                                    ) : (
+                                        <div></div>
+                                    )}
                                     <div className={cx('logout_item')}>
                                         <p>Hồ sơ</p>
                                     </div>

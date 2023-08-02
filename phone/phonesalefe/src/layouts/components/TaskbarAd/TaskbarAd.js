@@ -2,6 +2,7 @@ import { faComments, faHouseUser, faMobileScreen, faReceipt } from '@fortawesome
 import styles from './TaskbarAd.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 function TaskbarAd() {
@@ -21,24 +22,31 @@ function TaskbarAd() {
                 </div>
                 <div className={cx('container')}>
                     <div className={cx('container_main')}>
-                        <div className={cx('container_item')}>
-                            <div className={cx('icon')}>
-                                <FontAwesomeIcon icon={faHouseUser} />
+                        <Link to={'/admin'}>
+                            <div className={cx('container_item')}>
+                                <div className={cx('icon')}>
+                                    <FontAwesomeIcon icon={faHouseUser} />
+                                </div>
+                                <p>Quản lý tài khoản</p>
                             </div>
-                            <p>Quản lý tài khoản</p>
-                        </div>
-                        <div className={cx('container_item')}>
-                            <div className={cx('icon')}>
-                                <FontAwesomeIcon icon={faMobileScreen} />
+                        </Link>
+                        <Link to={'/product'}>
+                            <div className={cx('container_item')}>
+                                <div className={cx('icon')}>
+                                    <FontAwesomeIcon icon={faMobileScreen} />
+                                </div>
+                                <p>Quản lý sản phẩm</p>
                             </div>
-                            <p>Quản lý sản phẩm</p>
-                        </div>
-                        <div className={cx('container_item')}>
-                            <div className={cx('icon')}>
-                                <FontAwesomeIcon icon={faReceipt} />
+                        </Link>
+                        <Link to={'/bill'}>
+                            <div className={cx('container_item')}>
+                                <div className={cx('icon')}>
+                                    <FontAwesomeIcon icon={faReceipt} />
+                                </div>
+                                <p>Quản lý hóa đơn</p>
                             </div>
-                            <p>Quản lý hóa đơn</p>
-                        </div>
+                        </Link>
+
                         <div className={cx('container_item')}>
                             <div className={cx('icon')}>
                                 <FontAwesomeIcon icon={faComments} />
