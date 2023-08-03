@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import phonesale.dto.billDTO;
 import phonesale.entity.billEntity;
 import phonesale.entity.billdetailEntity;
 import phonesale.entity.cartEntity;
@@ -25,6 +26,7 @@ import phonesale.repository.billRepository;
 import phonesale.repository.billdetailRepository;
 import phonesale.repository.cartRepository;
 import phonesale.repository.customerRepository;
+import phonesale.service.billService;
 
 @RestController
 @CrossOrigin
@@ -40,53 +42,32 @@ public class billAPI {
 	
 	@Autowired
 	private cartRepository cartRe;
+	
+	@Autowired
+	private billService billSe;
 
 	@PostMapping("/bill/{username}")
-	public ResponseEntity<?> createBill(@RequestBody billEntity bill,@PathVariable("username") String username){
-		 customerEntity customer = customerRe.findByName(username);
-		 List<billdetailEntity> billdetails = new ArrayList<>();
-		 List<cartEntity> carts = cartRe.findAllByCustomer_Id(customer.getId());
-		 long sum=0;
-		 for(cartEntity cart : carts) {
-			 billdetailEntity billdetail = new billdetailEntity();
-			 productEntity product = cart.getProduct();
-			 sum += cart.getQuantity()*product.getPrice();
-			 billdetail.setBill(bill);
-			 billdetail.setProductbill(cart.getProduct());
-			 billdetail.setQuantity(cart.getQuantity());
-			 billdetails.add(billdetail);
-			
-		 }
-		 bill.setCustomerbill(customer);
-	     bill.setTotalprice(sum);
-	     billRe.save(bill);
-		 billdetailRe.saveAll(billdetails);
-	     cartRe.deleteAll(carts);
+	public ResponseEntity<?> createBill(@RequestBody billDTO bill,@PathVariable("username") String username){
+		 billSe.saveBill(bill, username);
 	     return ResponseEntity.ok(bill);
 	}
 	@GetMapping("/bill/{username}")
 	public ResponseEntity<?> getBill(@PathVariable("username") String username){
-		customerEntity customer = customerRe.findByName(username);
-		List<billEntity> bills = billRe.findByCustomerbill_Id(customer.getId());
-		return ResponseEntity.ok(bills);
+		return ResponseEntity.ok(billSe.getAllBill(username));
 	}
 	@GetMapping("bill/all")
 	public ResponseEntity<?> getAllBill(){
-		List<billEntity> bills = billRe.findAll();
-		return ResponseEntity.ok(bills);
+		
+		return ResponseEntity.ok(billSe.getAllBills());
 	}
 	@GetMapping("bill/one/{id}")
 	public ResponseEntity<?> getOne(@PathVariable("id") Long id){
-		billEntity bill = billRe.findById(id).get();
-		return ResponseEntity.ok(bill);
+		return ResponseEntity.ok(billSe.getBill(id));
 	}
 	@DeleteMapping("/bill/{billid}")
 	public ResponseEntity<?> deleteBill(@PathVariable("billid") Long billId){
-		billEntity bill = billRe.findById(billId).get();
-		List<billdetailEntity> billdetails = billdetailRe.findAllByBill_Id(billId);
-		billdetailRe.deleteAll(billdetails);
-		billRe.delete(bill);
-		return ResponseEntity.ok(null);
+		billSe.deleteBill(billId);
+		return ResponseEntity.ok("success");
 	}
 	
 

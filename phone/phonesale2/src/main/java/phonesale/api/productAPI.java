@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import phonesale.api.output.productOutout;
+import phonesale.dto.productDTO;
 import phonesale.entity.customerEntity;
 import phonesale.entity.productEntity;
 import phonesale.entity.cartEntity;
@@ -35,29 +36,23 @@ public class productAPI {
 	private productRepository productRe;
 
 	@Autowired
-	private customerRepository customerRe;
-
-	@Autowired
 	private productService productSe;
-
-	@Autowired
-	private cartRepository cartRe;
 
 	@GetMapping("/prouct/{type}")
 	public ResponseEntity<?> gProductDt(@PathVariable("type") String type) {
-		List<productEntity> products = productRe.findByType(type);
+		List<productDTO> products = productSe.findByType(type);
 		return ResponseEntity.ok(products);
 	}
 
 	@GetMapping("/product/all/new")
 	public ResponseEntity<?> getAll() {
-		List<productEntity> products = productRe.findAll();
+		List<productDTO> products = productSe.findAll();
 		return ResponseEntity.ok(products);
 	}
 
 	@GetMapping("/productid/{id}")
 	public ResponseEntity<?> gProductid(@PathVariable("id") Long id) {
-		productEntity product = productRe.findById(id).get();
+		productDTO product = productSe.findById(id);
 		return ResponseEntity.ok(product);
 	}
 
@@ -81,25 +76,13 @@ public class productAPI {
 	@PostMapping("/customer/{username}/{productId}")
 	public ResponseEntity<?> addcart(@PathVariable("username") String username,
 			@PathVariable("productId") Long productId) {
-		customerEntity customer = customerRe.findByName(username);
-		productEntity product = productRe.findById(productId).get();
-		cartEntity cart = cartRe.findByProduct_Id(product.getId());
-		if (cart != null) {
-			cart.setQuantity(cart.getQuantity() + 1);
-			cartRe.save(cart);
-		} else if (cart == null) {
-			cartEntity cart2 = new cartEntity();
-			cart2.setCustomer(customer);
-			cart2.setProduct(product);
-			cart2.setQuantity(1);
-			cartRe.save(cart2);
-		}
-		return ResponseEntity.ok(customer);
+		productSe.saveCart(username, productId);
+		return ResponseEntity.ok(username);
 	}
 
 	@PostMapping("product/new")
-	public ResponseEntity<?> addProduct(@RequestBody productEntity product) {
-		productRe.save(product);
+	public ResponseEntity<?> addProduct(@RequestBody productDTO product) {
+		productSe.save(product);
 		return ResponseEntity.ok(null);
 	}
 
@@ -113,15 +96,14 @@ public class productAPI {
 	}
 
 	@PutMapping("/product/new")
-	public ResponseEntity<?> editProduct(@RequestBody productEntity product) {
-		productRe.save(product);
+	public ResponseEntity<?> editProduct(@RequestBody productDTO product) {
+		productSe.save(product);
 		return ResponseEntity.ok(null);
 	}
 
 	@DeleteMapping("/product/{id}")
 	public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id) {
-		productEntity product = productRe.findById(id).get();
-		productRe.delete(product);
+		productSe.delete(id);
 		return ResponseEntity.ok(null);
 	}
 

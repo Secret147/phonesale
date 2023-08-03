@@ -19,7 +19,8 @@ import phonesale.entity.productEntity;
 import phonesale.repository.cartRepository;
 import phonesale.repository.customerRepository;
 import phonesale.repository.productRepository;
-import phonesale.service.productService;
+import phonesale.service.cartService;
+
 
 @RestController
 @CrossOrigin
@@ -31,71 +32,41 @@ public class cartAPI {
 	private customerRepository customerRe;
 
 	@Autowired
-	private productService productSe;
-
-	@Autowired
 	private cartRepository cartRe;
+	
+	@Autowired
+	private cartService cartSe;
 
 	@GetMapping("/product2/{username}")
 	public ResponseEntity<?> getProduct(@PathVariable("username") String username) {
-		customerEntity customer = customerRe.findByName(username);
-		Long customerId = customer.getId();
-		List<cartEntity> cartItems = cartRe.findAllByCustomer_Id(customerId);
-		cartItems.sort(Comparator.comparing(cartEntity::getId).reversed());
-		List<productEntity> products = new ArrayList<>();
-		for (cartEntity cartItem : cartItems) {
-			products.add(cartItem.getProduct());
-		}
-		
-		return ResponseEntity.ok(products);
+		return ResponseEntity.ok(cartSe.getProductCart(username));
 	}
 	@GetMapping("/size/{username}")
 	public ResponseEntity<?> countProduct(@PathVariable("username") String username) {
-		customerEntity customer = customerRe.findByName(username);
-		List<cartEntity> cartItems = cartRe.findAllByCustomer_Id(customer.getId());
-		return ResponseEntity.ok(cartItems.size());
+		return ResponseEntity.ok(cartSe.totalCart(username));
 	}
 	@GetMapping("/cart/quantity/{productId}")
 	public ResponseEntity<?> countQuantity(@PathVariable("productId") Long productId){
-		cartEntity cart = cartRe.findByProduct_Id(productId);
-		return ResponseEntity.ok(cart.getQuantity());
+		return ResponseEntity.ok(cartSe.quantity(productId));
 	}
 	@GetMapping("/cart/totalprice/{username}")
 	public ResponseEntity<?> totalPrice(@PathVariable("username") String username){
-		customerEntity customer = customerRe.findByName(username);
-		List<cartEntity> carts = cartRe.findAllByCustomer_Id(customer.getId());
-		long sum =0;
-		for(cartEntity item:carts) {
-			productEntity product = item.getProduct();
-			sum += item.getQuantity()*product.getPrice();
-		}
-		return ResponseEntity.ok(sum);
+		return ResponseEntity.ok(cartSe.totalPrice(username));
 	}
 	@PostMapping("/cart/up/{productId}")
 	public ResponseEntity<?> upQuantity(@PathVariable("productId") Long productId){
-		cartEntity cart = cartRe.findByProduct_Id(productId);
-		cart.setQuantity(cart.getQuantity()+1);
-        cartRe.save(cart);
-		return ResponseEntity.ok(cart);
+		cartSe.upQuantity(productId);
+		return ResponseEntity.ok("upQuantity");
 	}
 	@PostMapping("/cart/down/{productId}")
 	public ResponseEntity<?> downQuantity(@PathVariable("productId") Long productId){
-		cartEntity cart = cartRe.findByProduct_Id(productId);
-		if(cart.getQuantity() >1) {
-			cart.setQuantity(cart.getQuantity()-1);
-	        cartRe.save(cart);
-		}
-		else {
-			cartRe.delete(cart);
-		}
-		
-		return ResponseEntity.ok(cart);
+		cartSe.downQuantity(productId);
+		return ResponseEntity.ok("downQuantity");
 	}
 	@DeleteMapping("/cart/product/{productId}")
     public ResponseEntity<String> removeProduct(@PathVariable Long productId) {
-        cartEntity cart = cartRe.findByProduct_Id(productId);
-        cartRe.delete(cart);
-        return ResponseEntity.ok("Product removed from customer successfully.");
+        cartSe.deleteCart(productId);
+        return ResponseEntity.ok("success");
     }
 
 }

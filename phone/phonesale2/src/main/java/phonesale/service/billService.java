@@ -1,12 +1,13 @@
 package phonesale.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class billService {
+import phonesale.dto.billDTO;
 
-	public billService() {
-		// TODO Auto-generated constructor stub
-	}
-
+public interface billService {
+     void saveBill(billDTO dto,String username);
+     List<billDTO> getAllBill(String username);
+     List<billDTO> getAllBills();
+     billDTO getBill(Long billId);
+     void deleteBill(Long billId);
 }

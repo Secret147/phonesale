@@ -1,12 +1,9 @@
 package phonesale.service;
+import java.util.List;
 
-import org.springframework.stereotype.Service;
+import phonesale.dto.productDTO;
 
-@Service
-public class billdetailService {
-
-	public billdetailService() {
-		// TODO Auto-generated constructor stub
-	}
-
+public interface billdetailService {
+     List<productDTO> getProducts(Long id);
+     int quantity(Long productid,Long billid);
 }

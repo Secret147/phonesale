@@ -7,7 +7,7 @@ public class cartDTO {
 
 	private Long id;
 	
-	private Long quantity;
+	private int quantity;
 	
 
 }

@@ -1,12 +1,16 @@
 package phonesale.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class cartService {
+import phonesale.dto.cartDTO;
+import phonesale.dto.productDTO;
 
-	public cartService() {
-		// TODO Auto-generated constructor stub
-	}
-
+public interface cartService {
+	List<productDTO> getProductCart(String username);
+	int totalCart(String username);
+	int quantity(Long productId);
+	Long totalPrice(String username);
+	void upQuantity(Long productId);
+	void downQuantity(Long productId);
+	void deleteCart(Long productId);
 }
