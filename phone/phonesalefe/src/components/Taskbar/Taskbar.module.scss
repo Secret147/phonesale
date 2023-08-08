@@ -12,6 +12,7 @@
     border-radius: var(--border-task);
     width: var(--width-basic);
     flex-wrap: wrap;
+    justify-content: center;
 }
 .background {
     background-color: var(--primarytwo);
