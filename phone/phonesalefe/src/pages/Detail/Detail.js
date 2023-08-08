@@ -9,9 +9,6 @@ import { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 
 const cx = classNames.bind(styles);
-function formatNumber(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
 function Detail() {
     const id = localStorage.getItem('productId');
     const [product, setProduct] = useState([]);
@@ -23,7 +20,7 @@ function Detail() {
                 setProduct(res);
             });
     }, [id]);
-    const price = product.price ? formatNumber(product.price) : '';
+
     const addCart = async (userName, productId) => {
         const fetchOptions = {
             method: 'POST',
@@ -36,6 +33,10 @@ function Detail() {
             window.location.href = '/cart';
         }
     };
+    const formatNumber = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
+    const price = product.price ? formatNumber(product.price) : '';
     return (
         <div className={cx('wrapper')}>
             <div className={cx('taskbar')}>
@@ -71,7 +72,13 @@ function Detail() {
                                 <p>Miễn phí vận chuyển toàn quốc</p>
                             </div>
                             <div className={cx('button')}>
-                                <div className={cx('buynow')}>
+                                <div
+                                    className={cx('buynow')}
+                                    onClick={() => {
+                                        localStorage.setItem('productOrder', product.id);
+                                        window.location.href = '/formorder';
+                                    }}
+                                >
                                     <p>Mua ngay</p>
                                     <p>Giao tận nhà(COD)</p>
                                     <p>Hoặc nhận tại cửa hàng</p>

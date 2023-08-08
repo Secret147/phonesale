@@ -42,6 +42,7 @@ label,
     font-weight: 700;
     color: red;
     margin-top: 16px;
+    display: none;
 }
 .main_item {
     border: 2px solid gray;
@@ -138,5 +139,30 @@ label,
         font-size: 1.4rem;
         margin-bottom: 8px;
         align-items: center;
+    }
+}
+@media (max-width: 900px) {
+    .price {
+        display: none;
+    }
+}
+@media (max-width: 600px) {
+    .img {
+        img {
+            width: 40px;
+            height: 60px;
+        }
+    }
+    .right {
+        display: none;
+    }
+    .count_main {
+        margin-top: 16px;
+    }
+}
+@media (max-width: 330px) {
+    .name,
+    .memory {
+        font-size: 1.2rem;
     }
 }

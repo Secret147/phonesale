@@ -120,17 +120,18 @@
 }
 
 .logout {
-    background: var(--primarybackground);
+    background: var(--primary);
     position: absolute;
     top: 46px;
     right: -25px;
     width: 50%;
     user-select: none;
     z-index: 100;
+    border: 1px solid #ddd;
 }
 .logout_item {
     &:hover {
-        background: var(--primarybackgroundtwo);
+        background: var(--primarytwo);
     }
     display: flex;
     align-items: center;
@@ -160,7 +161,9 @@
     z-index: 1;
     top: 57px;
     left: 9px;
+    border: 2px solid #ddd;
     border-top: none;
+    border-right: none;
 }
 .listproduct_main {
 }

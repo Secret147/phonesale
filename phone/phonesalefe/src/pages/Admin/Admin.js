@@ -110,7 +110,8 @@ function Admin() {
             getAll();
             setCheckAdd(false);
         } else {
-            alert('Tài khoản đã tồn tại');
+            const error = await response.text();
+            alert(error);
         }
     };
     return (
@@ -193,18 +194,24 @@ function Admin() {
                     {checkEdit ? (
                         <div className={cx('add_account')}>
                             <div className={cx('add_account_main')}>
-                                <div className={cx('add_item')} onChange={handleEditChange}>
+                                <div className={cx('add_item')}>
                                     <p>Tên đăng nhập</p>
-                                    <input type="text" placeholder="Username" name="name" value={eUser.name}></input>
+                                    <input
+                                        type="text"
+                                        placeholder="Username"
+                                        name="name"
+                                        defaultValue={eUser.name}
+                                        onChange={handleEditChange}
+                                    ></input>
                                 </div>
-                                <div className={cx('add_item')} onChange={handleEditChange}>
+                                <div className={cx('add_item')}>
                                     <p>Mật khẩu</p>
                                     <input
                                         type="password"
                                         placeholder="Password"
                                         onChange={handleEditChange}
                                         name="password"
-                                        value={eUser.password}
+                                        defaultValue={eUser.password}
                                     ></input>
                                 </div>
                                 <div className={cx('add_item')}>
@@ -214,7 +221,7 @@ function Admin() {
                                         placeholder="Password"
                                         onChange={handleEditChange}
                                         name="birth"
-                                        value={eUser.birth}
+                                        defaultValue={eUser.birth}
                                     ></input>
                                 </div>
                                 <div className={cx('add_item')}>
@@ -224,7 +231,7 @@ function Admin() {
                                         placeholder="Numberphone"
                                         onChange={handleEditChange}
                                         name="number"
-                                        value={eUser.number}
+                                        defaultValue={eUser.number}
                                     ></input>
                                 </div>
                                 <div className={cx('add_item')}>
@@ -234,12 +241,18 @@ function Admin() {
                                         placeholder="Address"
                                         onChange={handleEditChange}
                                         name="address"
-                                        value={eUser.address}
+                                        defaultValue={eUser.address}
                                     ></input>
                                 </div>
-                                <div className={cx('add_item')} onChange={handleEditChange}>
+                                <div className={cx('add_item')}>
                                     <p>Role</p>
-                                    <input type="text" placeholder="Role" name="role" value={eUser.role}></input>
+                                    <input
+                                        type="text"
+                                        placeholder="Role"
+                                        name="role"
+                                        defaultValue={eUser.role}
+                                        onChange={handleEditChange}
+                                    ></input>
                                 </div>
                             </div>
                             <div className={cx('button')}>

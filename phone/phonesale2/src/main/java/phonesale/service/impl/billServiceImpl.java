@@ -17,6 +17,7 @@ import phonesale.repository.billRepository;
 import phonesale.repository.billdetailRepository;
 import phonesale.repository.cartRepository;
 import phonesale.repository.customerRepository;
+import phonesale.repository.productRepository;
 import phonesale.service.billService;
 
 @Service
@@ -35,6 +36,10 @@ public class billServiceImpl implements billService{
 	
 	@Autowired
 	private billConverter billCo;
+	
+	@Autowired
+	private productRepository productRe;
+	
 	@Override
 	public void saveBill(billDTO dto,String username) {
 		 customerEntity customer = customerRe.findByName(username);
@@ -57,6 +62,23 @@ public class billServiceImpl implements billService{
 	     billRe.save(bill);
 		 billdetailRe.saveAll(billdetails);
 	     cartRe.deleteAll(carts);
+	}
+	
+	@Override
+	public void saveOneBill(billDTO dto,String username, Long productid) {
+		customerEntity customer = customerRe.findByName(username);
+		billEntity bill = billCo.tobillEntity(dto);
+		productEntity product = productRe.findById(productid).get();
+		billdetailEntity billdetail = new billdetailEntity();
+		bill.setCustomerbill(customer);
+		bill.setTotalprice(product.getPrice());
+		billRe.save(bill);
+		billdetail.setBill(bill);
+		billdetail.setProductbill(product);
+		billdetail.setQuantity(1);
+		billdetailRe.save(billdetail);
+		
+		
 	}
 	
 	@Override

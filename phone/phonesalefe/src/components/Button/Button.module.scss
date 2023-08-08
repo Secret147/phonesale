@@ -8,6 +8,8 @@
     display: inline-block;
     text-align: center;
     user-select: none;
+    display: flex;
+    justify-content: center;
     .title {
         font-size: 1.8rem;
     }
@@ -30,6 +32,9 @@
 }
 .large {
     width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .fullwidth {
     width: 100%;

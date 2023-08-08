@@ -108,7 +108,18 @@ function FormOrder() {
                             <Button
                                 primary
                                 large
-                                onClick={() => saveBill(`http://localhost:8080/bill/${Cookies.get('user')}`)}
+                                onClick={() => {
+                                    if (localStorage.getItem('productOrder') !== null) {
+                                        saveBill(
+                                            `http://localhost:8080/bill/saveone/${Cookies.get(
+                                                'user',
+                                            )}/${localStorage.getItem('productOrder')}`,
+                                        );
+                                        localStorage.removeItem('productOrder');
+                                    } else {
+                                        saveBill(`http://localhost:8080/bill/${Cookies.get('user')}`);
+                                    }
+                                }}
                             >
                                 Tiến hành đặt hàng
                             </Button>

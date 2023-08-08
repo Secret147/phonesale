@@ -9,9 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
-function formatNumber(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
+
 function Home() {
     const [products, setProducts] = useState([]);
 
@@ -41,7 +39,9 @@ function Home() {
     const handlePageChange = (selectedPage) => {
         setCurrentPage(selectedPage);
     };
-
+    const formatNumber = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
     return (
         <div className={cx('wrapper')}>
             <Taskbar

@@ -17,12 +17,13 @@ function Register() {
         birth: '',
         role: 0,
     });
-
+    const [errors, setErrors] = useState('');
+    const [checkSignup, setCheckSignup] = useState(false);
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setUser({ ...user, [name]: value });
     };
-    const handleSubmit = async (event) => {
+    const handleSubmit = async () => {
         const fetchOptions = {
             method: 'POST',
             headers: {
@@ -32,14 +33,16 @@ function Register() {
         };
         const response = await fetch(customerAPI, fetchOptions);
         if (!response.ok) {
-            alert(response);
+            const error = await response.text();
+            setCheckSignup(true);
+            setErrors(error);
         } else {
             window.location.href = '/';
         }
     };
 
     return (
-        <Form title="Register" onSubmit={handleSubmit}>
+        <Form title="Đăng ký">
             <Input type="text" placeholder="Username" onChange={handleInputChange} name="name" value={user.name} />
             <Input
                 type="password"
@@ -57,9 +60,16 @@ function Register() {
                 value={user.number}
             />
             <Input type="text" placeholder="Address" onChange={handleInputChange} name="address" value={user.address} />
+            {checkSignup ? (
+                <div className={cx('error')}>
+                    <p>{errors}</p>
+                </div>
+            ) : (
+                <div></div>
+            )}
             <div className={cx('btn_submit')}>
-                <Button primary type="submit">
-                    Register
+                <Button primary type="submit" onClick={() => handleSubmit()}>
+                    Đăng ký
                 </Button>
                 <br />
                 <div className={cx('question')}>

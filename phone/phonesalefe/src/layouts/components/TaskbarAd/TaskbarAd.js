@@ -3,6 +3,7 @@ import styles from './TaskbarAd.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const cx = classNames.bind(styles);
 function TaskbarAd() {
@@ -17,7 +18,7 @@ function TaskbarAd() {
                         ></img>
                     </div>
                     <div className={cx('name')}>
-                        <p>Admin</p>
+                        <p>{Cookies.get('user')}</p>
                     </div>
                 </div>
                 <div className={cx('container')}>

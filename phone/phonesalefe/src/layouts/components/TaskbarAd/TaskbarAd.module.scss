@@ -25,6 +25,7 @@
 }
 .container {
     margin-top: 32px;
+    width: 90%;
 }
 .container_item {
     .icon {
@@ -49,4 +50,24 @@
 .container_item:hover {
     background: var(--primarytwo);
     color: white;
+}
+@media (max-width: 650px) {
+    .container_item {
+        p {
+            display: none;
+        }
+    }
+    .img {
+        img {
+            width: 60px;
+            height: 60px;
+        }
+    }
+}
+@media (max-width: 350px) {
+    .name {
+        p {
+            font-size: 1.6rem;
+        }
+    }
 }

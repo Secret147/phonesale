@@ -6,10 +6,6 @@ import OrderItem from '~/components/OrderItem/OrderItem';
 import Button from '~/components/Button/Button';
 
 const cx = classNames.bind(styles);
-
-function formatNumber(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
 function Order() {
     const [checkOrder, setCheckorder] = useState(true);
     const [bills, setBills] = useState([]);
@@ -42,6 +38,9 @@ function Order() {
         } else {
             alert('fail');
         }
+    };
+    const formatNumber = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
     return (
         <>

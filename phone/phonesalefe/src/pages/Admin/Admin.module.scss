@@ -9,6 +9,11 @@
     margin-top: var(--marginad);
     position: relative;
 }
+container_main {
+    margin-top: 16px;
+    overflow-y: auto;
+    height: 511px;
+}
 .header_main {
     display: flex;
     justify-content: space-between;
@@ -107,5 +112,26 @@
     }
     &:hover {
         background-color: var(--primarytwo);
+    }
+}
+@media (max-width: 1200px) {
+    .password {
+        width: 100px;
+    }
+    .role {
+        width: 100px;
+    }
+    .name {
+        width: 300px;
+    }
+}
+@media (max-width: 950px) {
+    .account_item {
+        flex-wrap: wrap;
+    }
+}
+@media (max-width: 350px) {
+    .header_main {
+        flex-wrap: wrap;
     }
 }

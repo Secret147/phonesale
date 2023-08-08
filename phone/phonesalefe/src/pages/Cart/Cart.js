@@ -6,9 +6,6 @@ import { Link } from 'react-router-dom';
 import CartItem from '~/components/CartItem/CartItem';
 
 const cx = classNames.bind(styles);
-function formatNumber(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
 function Cart() {
     const [products, setProducts] = useState([]);
     const [totalpay, setTotalpay] = useState(0);
@@ -58,7 +55,9 @@ function Cart() {
             setCheckitem(false);
         }
     }, [products]);
-
+    const formatNumber = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
     return (
         <>
             {checkItem ? (

@@ -5,9 +5,7 @@ import { useEffect, useState } from 'react';
 import Button from '~/components/Button/Button';
 
 const cx = classNames.bind(styles);
-function formatNumber(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
+
 function Bill() {
     const [bills, setBills] = useState([]);
     const [checkEdit, setCheckEdit] = useState(false);
@@ -33,6 +31,9 @@ function Bill() {
     };
     const closeBill = () => {
         setCheckEdit(false);
+    };
+    const formatNumber = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
     const price = bill.totalprice ? formatNumber(bill.totalprice) : '';
     return (

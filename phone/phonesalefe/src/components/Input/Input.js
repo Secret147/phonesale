@@ -1,5 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Input.module.scss';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 function Input({ type, name, value, className, title, small, onChange, large, placeholder, ...passProps }) {
@@ -23,9 +24,8 @@ function Input({ type, name, value, className, title, small, onChange, large, pl
                 onChange={onChange}
                 value={value}
                 required
-                autoComplete="off"
             />
         </div>
     );
 }
-export default Input;
+export default memo(Input);

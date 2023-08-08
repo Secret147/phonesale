@@ -7,9 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
-function formatNumber(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
 
 function Product() {
     const [checkAdd, setCheckAdd] = useState(false);
@@ -31,6 +28,9 @@ function Product() {
         price: '',
         type: '',
     });
+    const formatNumber = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    };
     const getAll = () => {
         fetch('http://localhost:8080/product/all/new')
             .then((res) => res.json())
@@ -133,11 +133,11 @@ function Product() {
                     {checkAdd ? (
                         <div className={cx('add_account')}>
                             <div className={cx('add_account_main')}>
-                                <div className={cx('add_item')} onChange={handleChange}>
+                                <div className={cx('add_item')}>
                                     <p>Tên sản phẩm</p>
-                                    <input type="text" placeholder="name" name="name"></input>
+                                    <input type="text" placeholder="name" name="name" onChange={handleChange}></input>
                                 </div>
-                                <div className={cx('add_item')} onChange={handleChange}>
+                                <div className={cx('add_item')}>
                                     <p>Bộ nhớ</p>
                                     <input
                                         type="text"
@@ -163,9 +163,9 @@ function Product() {
                                     <p>Giá thành</p>
                                     <input type="text" placeholder="price" onChange={handleChange} name="price"></input>
                                 </div>
-                                <div className={cx('add_item')} onChange={handleChange}>
+                                <div className={cx('add_item')}>
                                     <p>Loại</p>
-                                    <input type="text" placeholder="type" name="type"></input>
+                                    <input type="text" placeholder="type" name="type" onChange={handleChange}></input>
                                 </div>
                             </div>
                             <div className={cx('button')}>
@@ -188,18 +188,24 @@ function Product() {
                     {checkEdit ? (
                         <div className={cx('add_account')}>
                             <div className={cx('add_account_main')}>
-                                <div className={cx('add_item')} onChange={handleEditChange}>
+                                <div className={cx('add_item')}>
                                     <p>Tên sản phẩm</p>
-                                    <input type="text" placeholder="name" name="name" value={eProduct.name}></input>
+                                    <input
+                                        type="text"
+                                        placeholder="name"
+                                        name="name"
+                                        defaultValue={eProduct.name}
+                                        onChange={handleChange}
+                                    ></input>
                                 </div>
-                                <div className={cx('add_item')} onChange={handleEditChange}>
+                                <div className={cx('add_item')}>
                                     <p>Bộ nhớ</p>
                                     <input
                                         type="text"
                                         placeholder="memory"
                                         onChange={handleEditChange}
                                         name="memory"
-                                        value={eProduct.memory}
+                                        defaultValue={eProduct.memory}
                                     ></input>
                                 </div>
                                 <div className={cx('add_item')}>
@@ -209,7 +215,7 @@ function Product() {
                                         placeholder="description"
                                         onChange={handleEditChange}
                                         name="description"
-                                        value={eProduct.description}
+                                        defaultValue={eProduct.description}
                                     ></input>
                                 </div>
                                 <div className={cx('add_item')}>
@@ -219,7 +225,7 @@ function Product() {
                                         placeholder="image"
                                         onChange={handleEditChange}
                                         name="img"
-                                        value={eProduct.img}
+                                        defaultValue={eProduct.img}
                                     ></input>
                                 </div>
                                 <div className={cx('add_item')}>
@@ -229,12 +235,18 @@ function Product() {
                                         placeholder="price"
                                         onChange={handleEditChange}
                                         name="price"
-                                        value={eProduct.price}
+                                        defaultValue={eProduct.price}
                                     ></input>
                                 </div>
-                                <div className={cx('add_item')} onChange={handleEditChange}>
+                                <div className={cx('add_item')}>
                                     <p>Loại</p>
-                                    <input type="text" placeholder="type" name="type" value={eProduct.type}></input>
+                                    <input
+                                        type="text"
+                                        placeholder="type"
+                                        name="type"
+                                        defaultValue={eProduct.type}
+                                        onChange={handleChange}
+                                    ></input>
                                 </div>
                             </div>
                             <div className={cx('button')}>

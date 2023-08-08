@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.experimental.PackagePrivate;
 import phonesale.dto.billDTO;
 import phonesale.entity.billEntity;
 import phonesale.entity.billdetailEntity;
@@ -50,6 +51,12 @@ public class billAPI {
 	public ResponseEntity<?> createBill(@RequestBody billDTO bill,@PathVariable("username") String username){
 		 billSe.saveBill(bill, username);
 	     return ResponseEntity.ok(bill);
+	}
+	@PostMapping("bill/saveone/{username}/{productId}")
+	public ResponseEntity<?> saveOnebill(@RequestBody billDTO bill, 
+			@PathVariable("username") String username,@PathVariable("productId") Long productId){
+		billSe.saveOneBill(bill, username,productId);
+		return ResponseEntity.ok(null);
 	}
 	@GetMapping("/bill/{username}")
 	public ResponseEntity<?> getBill(@PathVariable("username") String username){

@@ -3,6 +3,11 @@
 }
 .main {
 }
+.main_item {
+    margin-top: 16px;
+    overflow-y: auto;
+    height: 511px;
+}
 .header {
     width: 100%;
     border-bottom: 2px solid var(--primary);
@@ -75,4 +80,18 @@
 .button {
     float: right;
     margin: 16px 0 32px 32px;
+}
+@media (max-width: 850px) {
+    .bill_item {
+        width: 100px;
+    }
+    .bill_item2 {
+        width: 200px;
+    }
+    .bill_item3 {
+        width: 200px;
+    }
+    .item_main {
+        flex-wrap: wrap;
+    }
 }
